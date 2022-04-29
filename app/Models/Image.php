@@ -10,11 +10,11 @@ class Image extends Model
     use HasFactory;
     protected $table = 'images';
     protected $fillable = [
-        'image'
-        // 'libelle' ,
-        // 'id_hotel' ,
-        // 'id_riad' ,
-        // 'id_maison_hote'
+        'image',
+        'libelle',
+        'id_hotel',
+        'id_riad',
+        'id_maison_hote'
     ];
     public function hotel()
     {

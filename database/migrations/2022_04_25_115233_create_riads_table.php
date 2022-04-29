@@ -29,6 +29,7 @@ class CreateRiadsTable extends Migration
                 $table->string('facebook')->nullable();
                 $table->string('instagram')->nullable();
                 $table->string('tiktok')->nullable();
+                $table->string('image')->nullable();
                 $table->integer('nb_visite')->default(0);
                 $table->timestamps();
             });

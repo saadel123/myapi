@@ -59,7 +59,7 @@ class MaisonHotesController extends Controller
      */
     public function show($id)
     {
-        return MaisonHotes::whereId($id)->with('ville', 'images')->first();
+        return MaisonHotes::whereId($id)->with('ville','images','commentaires','chambres','type_chambres')->first();
     }
 
     /**

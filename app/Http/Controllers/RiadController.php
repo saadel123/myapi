@@ -66,7 +66,7 @@ class RiadController extends Controller
      */
     public function show($id)
     {
-        return Riad::whereId($id)->with('ville','images')->first();
+        return Riad::whereId($id)->with('ville','images','commentaires','chambres','type_chambres')->first();
     }
 
     /**

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Commentaire;
+use Egulias\EmailValidator\Warning\Comment;
 use Illuminate\Http\Request;
 
 class CommentaireController extends Controller
@@ -13,7 +15,7 @@ class CommentaireController extends Controller
      */
     public function index()
     {
-        //
+        return Commentaire::all();
     }
 
     /**
@@ -24,7 +26,10 @@ class CommentaireController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'commentaire' => 'required'
+        ]);
+        return Commentaire::create($request->all());
     }
 
     /**
@@ -47,7 +52,9 @@ class CommentaireController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $commentaire = Commentaire::findOrFail($id);
+        $commentaire->update($request->all());
+        return $commentaire;
     }
 
     /**
@@ -58,6 +65,6 @@ class CommentaireController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return Commentaire::destroy($id);
     }
 }

@@ -1,12 +1,14 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ChambreController;
+use App\Http\Controllers\CommentaireController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\MaisonHotesController;
 use App\Http\Controllers\RiadController;
+use App\Http\Controllers\TypeChambreController;
 use App\Http\Controllers\VilleController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,11 +26,20 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
+Route::get('/cmt', [CommentaireController::class, 'index']);
+
 Route::post('/saveme', [ImageController::class, 'store']);
 
+
+Route::resource('chambres', ChambreController::class);
+Route::resource('typechambres', TypeChambreController::class);
+
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/login', [AuthController::class, 'login']);
+
+
 Route::get('/villes', [VilleController::class, 'index']);
+
 
 Route::get('/hotels', [HotelController::class, 'index']);
 Route::post('/hotels', [HotelController::class, 'store']);

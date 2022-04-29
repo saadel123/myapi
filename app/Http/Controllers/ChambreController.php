@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Chambre;
 use Illuminate\Http\Request;
 
 class ChambreController extends Controller
@@ -13,7 +14,7 @@ class ChambreController extends Controller
      */
     public function index()
     {
-        //
+        return Chambre::with('type_chambres')->get();
     }
 
     /**
@@ -24,7 +25,7 @@ class ChambreController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return Chambre::create($request->all());
     }
 
     /**
@@ -35,7 +36,7 @@ class ChambreController extends Controller
      */
     public function show($id)
     {
-        //
+        //return Chambre::findOrFail($id);
     }
 
     /**
@@ -47,7 +48,9 @@ class ChambreController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $chambre = Chambre::findOrFail($id);
+        $chambre->update($request->all());
+        return $chambre;
     }
 
     /**
@@ -58,6 +61,6 @@ class ChambreController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return Chambre::destroy($id);
     }
 }

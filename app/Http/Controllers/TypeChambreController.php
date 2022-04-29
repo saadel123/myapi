@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Type_chambre;
 use Illuminate\Http\Request;
 
-class AvisController extends Controller
+class TypeChambreController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +14,7 @@ class AvisController extends Controller
      */
     public function index()
     {
-        //
+        return Type_chambre::all();
     }
 
     /**
@@ -24,7 +25,7 @@ class AvisController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return Type_chambre::create($request->all());
     }
 
     /**
@@ -47,7 +48,9 @@ class AvisController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $tchambre = Type_chambre::findOrFail($id);
+        $tchambre->update($request->all());
+        return $tchambre;
     }
 
     /**
@@ -58,6 +61,6 @@ class AvisController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return Type_chambre::destroy($id);
     }
 }

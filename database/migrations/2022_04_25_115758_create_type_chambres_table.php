@@ -16,8 +16,8 @@ class CreateTypeChambresTable extends Migration
         if (!Schema::hasTable('type_chambres')) {
             Schema::create('type_chambres', function (Blueprint $table) {
                 $table->id();
-                $table->string('libelle');
-                $table->text('description')->nullable();
+                $table->string('type');
+                $table->text('options')->nullable();
                 $table->integer('prix')->nullable();
                 $table->integer('nbr_personnes')->nullable();
                 $table->integer('id_chambre')->nullable();

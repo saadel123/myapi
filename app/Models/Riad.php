@@ -32,4 +32,16 @@ class Riad extends Model
     public function images(){
         return $this->hasMany(Image::class,'id_riad');
     }
+    public function chambres() 
+    {
+        return $this->hasMany(Chambre::class,'id_riad');
+    }
+    public function commentaires() 
+    {
+        return $this->hasMany(Commentaire::class,'id_riad');
+    }
+    public function type_chambres()
+    {
+        return $this->hasManyThrough(Type_chambre::class, Chambre::class,'id_riad','id_chambre');
+    }
 }

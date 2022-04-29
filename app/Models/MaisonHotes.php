@@ -32,4 +32,16 @@ class MaisonHotes extends Model
     public function images(){
         return $this->hasMany(Image::class,'id_maison_hote');
     }
+    public function chambres() 
+    {
+        return $this->hasMany(Chambre::class,'id_maison_hote');
+    }
+    public function commentaires() 
+    {
+        return $this->hasMany(Commentaire::class,'id_maison_hote');
+    }
+    public function type_chambres()
+    {
+        return $this->hasManyThrough(Type_chambre::class, Chambre::class,'id_maison_hote','id_chambre');
+    }
 }

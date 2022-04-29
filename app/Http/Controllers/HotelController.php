@@ -67,7 +67,7 @@ class HotelController extends Controller
      */
     public function show($id)
     {
-        return Hotel::whereId($id)->with('ville')->first();
+        return Hotel::whereId($id)->with('ville','images','commentaires','chambres','type_chambres')->first();
     }
 
     /**
