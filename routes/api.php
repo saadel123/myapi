@@ -43,7 +43,8 @@ Route::get('/villes', [VilleController::class, 'index']);
 
 Route::get('/hotels', [HotelController::class, 'index']);
 Route::post('/hotels', [HotelController::class, 'store']);
-Route::get('/hotels/{id}', [HotelController::class, 'show']);
+Route::get('/hotels/{slug}', [HotelController::class, 'show']);
+Route::get('/hotels/id/{id}', [HotelController::class, 'id']);
 /*put is not supported in postman for the form-data section i've solved the problem using the bellow insteractions
 1-use ?_method=PUT as params(POSTMAN) and keep the route (PUT) or 2-change it to post(Route::POST) with a given id*/
 Route::post('/hotels/{id}', [HotelController::class, 'update']);
@@ -53,14 +54,15 @@ Route::get('/hotels/search/{name}', [HotelController::class, 'search']);
 
 Route::get('/riads', [RiadController::class, 'index']);
 Route::post('/riads', [RiadController::class, 'store']);
-Route::get('/riads/{id}', [RiadController::class, 'show']);
+Route::get('/riads/{slug}', [RiadController::class, 'show']);
+Route::get('/riads/id/{id}', [RiadController::class, 'id']);
 Route::post('/riads/{id}', [RiadController::class, 'update']);
 Route::delete('/riads/{id}', [RiadController::class, 'destroy']);
 Route::get('/riads/search/{name}', [RiadController::class, 'search']);
 
 Route::get('/maisons', [MaisonHotesController::class, 'index']);
 Route::post('/maisons', [MaisonHotesController::class, 'store']);
-Route::get('/maisons/{id}', [MaisonHotesController::class, 'show']);
+Route::get('/maisons/{slug}', [MaisonHotesController::class, 'show']);
 Route::post('/maisons/{id}', [MaisonHotesController::class, 'update']);
 Route::delete('/maisons/{id}', [MaisonHotesController::class, 'destroy']);
 Route::get('/maisons/search/{name}', [MaisonHotesController::class, 'search']);

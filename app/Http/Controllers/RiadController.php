@@ -64,9 +64,13 @@ class RiadController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        return Riad::whereId($id)->with('ville','images','commentaires','chambres','type_chambres')->first();
+        return Riad::whereSlug($slug)->with('ville','images','commentaires','chambres.type_chambres')->first();
+    }
+    public function id($id)
+    {
+        return Riad::with('ville','images','commentaires','chambres.type_chambres')->find($id);
     }
 
     /**

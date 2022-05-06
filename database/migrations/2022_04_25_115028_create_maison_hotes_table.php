@@ -18,7 +18,7 @@ class CreateMaisonHotesTable extends Migration
                 $table->id();
                 $table->integer('user_id')->nullable();
                 $table->string('nom')->nullable();
-                $table->string('slug')->nullable();
+                $table->string('slug')->unique();
                 $table->text('description')->nullable();
                 $table->string('tel', 20)->nullable();
                 $table->integer('ville')->nullable();

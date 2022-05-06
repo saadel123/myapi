@@ -16,7 +16,7 @@ class HotelController extends Controller
      */
     public function index()
     {
-        return Hotel::with('ville','images')->get();
+        return Hotel::with('ville', 'images')->get();
     }
 
     /**
@@ -65,9 +65,21 @@ class HotelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        return Hotel::whereId($id)->with('ville','images','commentaires','chambres','type_chambres')->first();
+        return Hotel::whereSlug($slug)->with('ville', 'images', 'commentaires', 'chambres.type_chambres')->first();
+    }
+
+    public function id($id)
+    {
+        // $chambres = DB::table('hotels')
+        //     ->join('chambres', 'hotels.id', '=', 'chambres.id_hotel')
+        //     ->join('type_chambres', 'chambres.id', '=', 'type_chambres.id_chambre')
+        //     ->where('hotels.id', '=', $id)
+        //     ->get();
+        //nested relationships
+        $hotels = Hotel::with('ville', 'images', 'commentaires', 'chambres.type_chambres')->find($id);
+        return $hotels;
     }
 
     /**

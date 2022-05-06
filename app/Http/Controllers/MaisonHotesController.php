@@ -57,9 +57,9 @@ class MaisonHotesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        return MaisonHotes::whereId($id)->with('ville','images','commentaires','chambres','type_chambres')->first();
+        return MaisonHotes::whereSlug($slug)->with('ville','images','commentaires','chambres.type_chambres')->first();
     }
 
     /**
