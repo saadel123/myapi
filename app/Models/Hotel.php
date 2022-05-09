@@ -49,4 +49,8 @@ class Hotel extends Model
     {
         return $this->hasManyThrough(Type_chambre::class, Chambre::class,'id_hotel','id_chambre');
     }
+    public function reservezs() 
+    {
+        return $this->hasMany(Reservez::class,'id_hotel');
+    }
 }

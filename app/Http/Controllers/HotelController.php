@@ -117,6 +117,17 @@ class HotelController extends Controller
 
     public function search($nom_hotle)
     {
-        return Hotel::where('nom', 'like', '%' . $nom_hotle . '%')->get();
+        $ville_id = request()->query('ville');
+        $hotels = Hotel::when($nom_hotle, function ($query, $search) {
+            return $query->where('nom', 'like', "%{$search}%");
+        })->when($ville_id, function ($query, $ville) {
+            return $query->where('ville_id', '=', "{$ville}");
+        })->get();
+
+        if (count($hotels)) {
+            return Response()->json($hotels);
+        } else {
+            return response()->json(['Result' => 'No Data not found'], 404);
+        }
     }
 }

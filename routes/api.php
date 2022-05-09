@@ -6,6 +6,7 @@ use App\Http\Controllers\CommentaireController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\MaisonHotesController;
+use App\Http\Controllers\ReservezController;
 use App\Http\Controllers\RiadController;
 use App\Http\Controllers\TypeChambreController;
 use App\Http\Controllers\VilleController;
@@ -26,7 +27,15 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-Route::get('/cmt', [CommentaireController::class, 'index']);
+Route::get('/reservations', [ReservezController::class, 'index']);
+Route::post('/reservations', [ReservezController::class, 'store']);
+Route::post('/reservations/{id}', [ReservezController::class, 'update']);
+Route::delete('/reservations/{id}', [ReservezController::class, 'destroy']);
+
+Route::get('/commentaires', [CommentaireController::class, 'index']);
+Route::post('/commentaires', [CommentaireController::class, 'store']);
+Route::post('/commentaires/{id}', [CommentaireController::class, 'update']);
+Route::delete('/commentaires/{id}', [CommentaireController::class, 'destroy']);
 
 Route::post('/saveme', [ImageController::class, 'store']);
 
