@@ -5,22 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Partage extends Model
+class Lieux extends Model
 {
     use HasFactory;
-    protected $table = 'partages';
+    protected $table = 'lieux';
     protected $fillable = [
         'user_id',
         'ville_id',
-        'description',
         'titre',
         'slug',
+        'description',
         'image'
     ];
-    public function commentpartage()
-    {
-        return $this->hasMany(CommentPartage::class, 'id_partage');
-    }
-
 }
-

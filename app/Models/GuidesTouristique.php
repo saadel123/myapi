@@ -5,26 +5,26 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Restaurant extends Model
+class GuidesTouristique extends Model
 {
     use HasFactory;
-    protected $table = 'restaurants';
+    protected $table = 'guides_touristiques';
     protected $fillable = [
         'user_id',
         'nom',
         'slug',
         'description',
-        'specialite',
-        'horaire',
         'tel',
         'ville_id',
         'adresse',
         'email',
         'prix',
+        'date_act',
         'website',
         'facebook',
         'instagram',
         'tiktok',
+        'nbr_etoiles',
         'image',
         'nb_visite'
     ];
@@ -32,20 +32,20 @@ class Restaurant extends Model
     {
         return $this->belongsTo(Ville::class, 'ville_id');
     }
-    public function catmenus()
-    {
-        return $this->hasMany(CatMenu::class, 'id_restaurant');
-    }
     public function images()
     {
-        return $this->hasMany(Image::class, 'id_restaurant');
+        return $this->hasMany(ActiviteImage::class, 'id_guide');
     }
     public function commentaires()
     {
-        return $this->hasMany(Commentaire::class, 'id_restaurant');
+        return $this->hasMany(CommentPartage::class, 'id_guide');
     }
-    public function reservezs()
+    public function langue_guides()
     {
-        return $this->hasMany(Reservez::class, 'id_restaurant');
+        return $this->hasMany(LangueGuide::class, 'id_guide');
+    }
+    public function type_activite()
+    {
+        return $this->hasMany(TypeActivite::class, 'id_guide');
     }
 }

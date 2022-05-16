@@ -28,4 +28,8 @@ class Image extends Model
     {
         return $this->belongsTo(MaisonHotes::class, 'id_maison_hote');
     }
+    public function restaurant()
+    {
+        return $this->belongsTo(Restaurant::class, 'id_restaurant');
+    }
 }

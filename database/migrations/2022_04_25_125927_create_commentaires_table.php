@@ -22,6 +22,7 @@ class CreateCommentairesTable extends Migration
                 $table->integer('id_hotel')->nullable();
                 $table->integer('id_riad')->nullable();
                 $table->integer('id_maison_hote')->nullable();
+                $table->integer('id_restaurant')->nullable();
                 $table->integer('parent_id')->nullable();
                 $table->timestamps();
             });

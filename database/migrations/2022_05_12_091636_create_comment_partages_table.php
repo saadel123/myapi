@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePartagesTable extends Migration
+class CreateCommentPartagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,11 @@ class CreatePartagesTable extends Migration
      */
     public function up()
     {
-        Schema::create('partages', function (Blueprint $table) {
+        Schema::create('comment_partages', function (Blueprint $table) {
             $table->id();
+            $table->text('commentaire')->nullable();
             $table->integer('user_id')->nullable();
-            $table->integer('ville_id')->nullable();
-            $table->string('titre')->nullable();
-            $table->string('slug')->unique();
-            $table->text('description')->nullable();
-            $table->string('image')->nullable();
+            $table->integer('id_partage')->nullable();
             $table->timestamps();
         });
     }
@@ -32,6 +29,6 @@ class CreatePartagesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('partages');
+        Schema::dropIfExists('comment_partages');
     }
 }

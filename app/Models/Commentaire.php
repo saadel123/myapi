@@ -29,5 +29,9 @@ class Commentaire extends Model
     {
         return $this->belongsTo(MaisonHotes::class, 'id_maison_hote');
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }
 

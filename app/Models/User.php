@@ -23,6 +23,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(MaisonHotes::class, 'user_id');
     }
+    public function temoignages()
+    {
+        return $this->hasMany(Temoignage::class, 'user_id');
+    }
+    public function comments()
+    {
+        return $this->hasMany(CommentPartage::class, 'user_id');
+    }
     /**
      * The attributes that are mass assignable.
      *
