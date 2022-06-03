@@ -27,17 +27,22 @@ class EvenementController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'titre' => 'required',
-            'description' => 'required|min:10|max:30000',
-            'image' => 'required|mimes:jpg,jpeg,png|max:2000',
+        // $this->validate($request, [
+        //     'titre' => 'required',
+        //     'description' => 'required|min:10|max:30000',
+        //     'image' => 'required|mimes:jpg,jpeg,png|max:2000',
+        // ]);
+
+        $evenement = Evenement::create([
+            'titre' => $request->titre,
+            'slug' =>  Str::slug($request->titre),
+            'description' => $request->description,
+            'image' => $request->image->store('images/evenements', 'public'),
         ]);
-        $evenements = $request->all();
-        if ($request->hasFile('image')) {
-            $evenements['image'] = $request->image->store('images/evenements', 'public');
-        }
-        $evenements['slug'] = Str::slug($request->titre . ' ' . $request->id, '-');
-        return  Evenement::create($evenements);
+        $respone = [
+            'evenement' => $evenement,
+        ];
+        return response($respone, 201);
     }
 
     /**
@@ -60,17 +65,22 @@ class EvenementController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'nom' => 'required',
-            'description' => 'required|min:10|max:30000',
-            'image' => 'required|mimes:jpg,jpeg,png|max:2000',
-        ]);
+        // $this->validate($request, [
+        //     'nom' => 'required',
+        //     'description' => 'required|min:10|max:30000',
+        //     'image' => 'required|mimes:jpg,jpeg,png|max:2000',
+        // ]);
         $evenement = Evenement::findOrFail($id);
-        $modifierevenement = $request->all();
+        $evenement->titre =  $request->titre;
+        $evenement->description =  $request->description;
         if ($request->hasFile('image')) {
-            $modifierevenement['image'] = $request->image->store('images/evenements', 'public');
+            $evenement->image = $request->image->store('images/evenements', 'public');
         }
-        return $evenement->update($modifierevenement);
+        $evenement->save();
+        $respone = [
+            'evenement' => $evenement,
+        ];
+        return response($respone, 201);
     }
 
     /**

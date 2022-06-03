@@ -20,8 +20,9 @@ use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\RiadController;
 use App\Http\Controllers\TemoignagesController;
 use App\Http\Controllers\TypeChambreController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\VilleController;
-use App\Models\CommentPartage;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -153,9 +154,6 @@ Route::post('/saveme', [ImageController::class, 'store']);
 Route::resource('chambres', ChambreController::class);
 Route::resource('typechambres', TypeChambreController::class);
 
-Route::post('/register', [AuthController::class, 'register']);
-Route::post('/login', [AuthController::class, 'login']);
-
 
 Route::get('/villes', [VilleController::class, 'index']);
 
@@ -188,4 +186,19 @@ Route::get('/maisons/search/{name}', [MaisonHotesController::class, 'search']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/logout', [AuthController::class, 'logout']);
+});
+
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
+
+Route::post('/register', [AuthController::class, 'register']);
+Route::post('/registerpro', [AuthController::class, 'registerPro']);
+Route::post('/login', [AuthController::class, 'login']);
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::post('/users/{id}', [UserController::class, 'update']);
+    Route::post('/updatepassword/{id}', [UserController::class, 'updatePassword']);
+    Route::get('/users', [UserController::class, 'index']);
+    Route::get('/users/{id}', [UserController::class, 'show']);
 });

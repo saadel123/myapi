@@ -8,14 +8,48 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+
+    public function index()
+    {
+    }
+
     public function register(Request $request)
+    {
+        $fields = $request->validate([
+            'nom' => 'required|string',
+            'prenom' => 'required|string',
+            'name' => 'required|string',
+            'email' => 'required|string|unique:users,email',
+            'confirmation_de_adresse_email' => 'required|string|same:email',
+            'password' => 'required|string',
+            'confirmation_de_mot_de_passe' => 'required|same:password'
+        ]);
+        $user = User::create([
+            'role_id' => 3,
+            'nom' => $fields['nom'],
+            'prenom' => $fields['prenom'],
+            'name' => $fields['name'],
+            'email' => $fields['email'],
+            'password' => Hash::make($fields['password'])
+        ]);
+        $token = $user->createToken('myapptoken')->plainTextToken;
+        $respone = [
+            'user' => $user,
+            'token' => $token
+        ];
+        return response($respone, 201);
+    }
+    public function registerPro(Request $request)
     {
         $fields = $request->validate([
             'name' => 'required|string',
             'email' => 'required|string|unique:users,email',
-            'password' => 'required|string'
+            'confirmation_de_adresse_email' => 'required|string|same:email',
+            'password' => 'required|string',
+            'confirmation_de_mot_de_passe' => 'required|same:password'
         ]);
         $user = User::create([
+            'role_id' => 2,
             'name' => $fields['name'],
             'email' => $fields['email'],
             'password' => Hash::make($fields['password'])
@@ -30,6 +64,7 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+
         $fields = $request->validate([
             'email' => 'required|string',
             'password' => 'required|string'
@@ -41,7 +76,7 @@ class AuthController extends Controller
         // Check password
         if (!$user || !Hash::check($fields['password'], $user->password)) {
             return response([
-                'message' => 'Bad creds'
+                'message' => 'Ces identifiants ne correspondent pas à nos enregistrements'
             ], 401);
         }
 
@@ -57,8 +92,7 @@ class AuthController extends Controller
 
     public function logout(Request $request)
     {
-        auth()->user()->tokens()->delete();
-        //$request->token
+        $request->user()->tokens()->delete();
         return [
             'message' => 'Logged out'
         ];

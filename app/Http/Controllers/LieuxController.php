@@ -27,18 +27,21 @@ class LieuxController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'titre' => 'required',
-            'description' => 'required|min:10|max:30000',
-            'image' => 'required|mimes:jpg,jpeg,png|max:2000',
+        // $this->validate($request, [
+        //     'titre' => 'required',
+        //     'description' => 'required|min:10|max:30000',
+        //     'image' => 'required|mimes:jpg,jpeg,png|max:2000',
+        // ]);
+        $lieux = Gastronomie::create([
+            'titre' => $request->titre,
+            'slug' =>  Str::slug($request->titre),
+            'description' => $request->description,
+            'image' => $request->image->store('images/lieux', 'public'),
         ]);
-        $lieux = $request->all();
-        if ($request->hasFile('image')) {
-            $lieux['image'] = $request->image->store('images/lieux', 'public');
-        }
-        $lieux['slug'] = Str::slug($request->titre . ' ' . $request->id, '-');
-        $listlieux = Lieux::create($lieux);
-        return $listlieux;
+        $respone = [
+            'lieux' => $lieux,
+        ];
+        return response($respone, 201);
     }
 
     /**
@@ -49,7 +52,7 @@ class LieuxController extends Controller
      */
     public function show($slug)
     {
-        return Lieux::whereSlug($slug)->first(); 
+        return Lieux::whereSlug($slug)->first();
     }
 
     /**
@@ -61,7 +64,18 @@ class LieuxController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $lieux = Lieux::findOrFail($id);
+        $lieux->titre =  $request->titre;
+        $lieux->user_id =  $request->user_id;
+        $lieux->description =  $request->description;
+        if ($request->hasFile('image')) {
+            $lieux->image = $request->image->store('images/lieux', 'public');
+        }
+        $lieux->save();
+        $respone = [
+            'lieux' => $lieux,
+        ];
+        return response($respone, 201);
     }
 
     /**

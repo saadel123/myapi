@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Temoignage;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
+
 
 
 class TemoignagesController extends Controller
@@ -27,16 +27,19 @@ class TemoignagesController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'description' => 'required|min:10|max:30000',
+        // $this->validate($request, [
+        //     'description' => 'required|min:10|max:30000',
+        //     'user_id' => 'required',
+        // ]);
+        $temoignage = Temoignage::create([
+            'user_id' => $request->user_id,
+            'description' => $request->description,
+            'image' => $request->image->store('images/temoignages', 'public'),
         ]);
-        $gastronomie = $request->all();
-        if ($request->hasFile('image')) {
-            $gastronomie['image'] = $request->image->store('images/temoignages', 'public');
-        }
-        $gastronomie['slug'] = Str::slug($request->nom);
-        $listgastronomies = Temoignage::create($gastronomie);
-        return $listgastronomies;
+        $respone = [
+            'temoignage' => $temoignage,
+        ];
+        return response($respone, 201);
     }
 
     /**
@@ -59,16 +62,20 @@ class TemoignagesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'description' => 'required|min:10|max:30000',
-        ]);
-        $temoignage = Temoignage::findOrFail($id);
-        $listtemoignages = $request->all();
+        // $this->validate($request, [
+        //     'description' => 'required|min:10|max:30000',
+        // ]);
+        $temoignage = temoignage::findOrFail($id);
+        $temoignage->user_id =  $request->user_id;
+        $temoignage->description =  $request->description;
         if ($request->hasFile('image')) {
-            $listtemoignages['image'] = $request->image->store('images/temoignages', 'public');
+            $temoignage->image = $request->image->store('images/temoignages', 'public');
         }
-        $temoignage->update($listtemoignages);
-        return $temoignage;
+        $temoignage->save();
+        $respone = [
+            'temoignage' => $temoignage,
+        ];
+        return response($respone, 201);
     }
 
     /**

@@ -26,17 +26,21 @@ class PartageController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'description' => 'required|min:10|max:30000',
-            'image' => 'required|mimes:jpg,jpeg,png|max:2000',
+        // $this->validate($request, [
+        //     'description' => 'required|min:10|max:30000',
+        //     'image' => 'required|mimes:jpg,jpeg,png|max:2000',
+        // ]);
+
+        $partage = Partage::create([
+            'titre' => $request->titre,
+            'slug' =>  Str::slug($request->titre),
+            'description' => $request->description,
+            'image' => $request->image->store('images/partages', 'public'),
         ]);
-        $partages = $request->all();
-        if ($request->hasFile('image')) {
-            $partages['image'] = $request->image->store('images/partages', 'public');
-        }
-        $partages['slug'] = Str::slug($request->titre);
-        $listpartages = Partage::create($partages);
-        return $listpartages;
+        $respone = [
+            'partage' => $partage,
+        ];
+        return response($respone, 201);
     }
 
     /**
@@ -59,17 +63,21 @@ class PartageController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'description' => 'required|min:10|max:30000',
-            'image' => 'required|mimes:jpg,jpeg,png|max:2000',
-        ]);
-        $partage = Partage::findOrFail($id);
-        $listpartages = $request->all();
+        // $this->validate($request, [
+        //     'description' => 'required|min:10|max:30000',
+        //     'image' => 'required|mimes:jpg,jpeg,png|max:2000',
+        // ]);
+        $partage = partage::findOrFail($id);
+        $partage->titre =  $request->titre;
+        $partage->description =  $request->description;
         if ($request->hasFile('image')) {
-            $listpartages['image'] = $request->image->store('images/partages', 'public');
+            $partage->image = $request->image->store('images/partages', 'public');
         }
-        $partage->update($listpartages);
-        return $listpartages;
+        $partage->save();
+        $respone = [
+            'partage' => $partage,
+        ];
+        return response($respone, 201);
     }
 
     /**

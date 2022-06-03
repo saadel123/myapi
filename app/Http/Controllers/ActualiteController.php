@@ -26,18 +26,29 @@ class ActualiteController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'titre' => 'required',
-            'description' => 'required|min:10|max:30000',
-            'image' => 'required|mimes:jpg,jpeg,png|max:2000',
+        // $this->validate($request, [
+        //     'titre' => 'required',
+        //     'description' => 'required|min:10|max:30000',
+        //     'image' => 'required|mimes:jpg,jpeg,png|max:2000',
+        // ]);
+        $actualite = Actualite::create([
+            'titre' => $request->titre,
+            'slug' =>  Str::slug($request->titre),
+            'description' => $request->description,
+            'image' => $request->image->store('images/actualites', 'public'),
         ]);
-        $actualite = $request->all();
-        if ($request->hasFile('image')) {
-            $actualite['image'] = $request->image->store('images/actualites', 'public');
-        }
-    $actualite['slug'] = Str::slug($request->titre . ' ' . $request->id, '-');
-        $listactualites = Actualite::create($actualite);
-        return $listactualites;
+        $respone = [
+            'actualite' => $actualite,
+        ];
+        return response($respone, 201);
+
+        // $actualite = $request->all();
+        // if ($request->hasFile('image')) {
+        //     $actualite['image'] =
+        // }
+        // $actualite['slug'] = Str::slug($request->titre . ' ' . $request->id, '-');
+        // $listactualites = Actualite::create($actualite);
+        // return $listactualites;
     }
 
     /**
@@ -60,21 +71,25 @@ class ActualiteController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-        $this->validate($request, [
-            'nom' => 'required',
-            'description' => 'required|min:10|max:30000',
-            //'tel' => 'required',
-            'image' => 'required|mimes:jpg,jpeg,png|max:2000',
-            //'email' => 'required|unique:hotels',
-        ]);
-        $actualites = Actualite::findOrFail($id);
-        $modifieractualite = $request->all();
+        // $this->validate($request, [
+        //     'nom' => 'required',
+        //     'description' => 'required|min:10|max:30000',
+        //     //'tel' => 'required',
+        //     'image' => 'required|mimes:jpg,jpeg,png|max:2000',
+        //     //'email' => 'required|unique:hotels',
+        // ]);
+
+        $actualite = Actualite::findOrFail($id);
+        $actualite->titre =  $request->titre;
+        $actualite->description =  $request->description;
         if ($request->hasFile('image')) {
-            $modifieractualite['image'] = $request->image->store('images/actualites', 'public');
+            $actualite->image = $request->image->store('images/actualites', 'public');
         }
-        $actualites->update($modifieractualite);
-        return $actualites;
+        $actualite->save();
+        $respone = [
+            'actualite' => $actualite,
+        ];
+        return response($respone, 201);
     }
 
     /**

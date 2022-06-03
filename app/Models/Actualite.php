@@ -12,9 +12,10 @@ class Actualite extends Model
     protected $fillable = [
         'user_id' ,
         'ville_id' ,
+        'image',
         'titre' ,
         'slug' ,
         'description' ,
-        'image' 
+
     ];
 }

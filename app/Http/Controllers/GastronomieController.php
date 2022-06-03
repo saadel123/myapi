@@ -26,18 +26,22 @@ class GastronomieController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'titre' => 'required',
-            'description' => 'required|min:10|max:30000',
-            'image' => 'required|mimes:jpg,jpeg,png|max:2000',
+        // $this->validate($request, [
+        //     'titre' => 'required',
+        //     'description' => 'required|min:10|max:30000',
+        //     'image' => 'required|mimes:jpg,jpeg,png|max:2000',
+        // ]);
+
+        $gastronomie = Gastronomie::create([
+            'titre' => $request->titre,
+            'slug' =>  Str::slug($request->titre),
+            'description' => $request->description,
+            'image' => $request->image->store('images/gastronomies', 'public'),
         ]);
-        $gastronomie = $request->all();
-        if ($request->hasFile('image')) {
-            $gastronomie['image'] = $request->image->store('images/gastronomies', 'public');
-        }
-        $gastronomie['slug'] = Str::slug($request->titre . ' ' . $request->id, '-');
-        $listgastronomies = Gastronomie::create($gastronomie);
-        return $listgastronomies;
+        $respone = [
+            'gastronomie' => $gastronomie,
+        ];
+        return response($respone, 201);
     }
 
     /**
@@ -60,19 +64,26 @@ class GastronomieController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-        $this->validate($request, [
-            'titre' => 'required',
-            'description' => 'required|min:10|max:30000',
-            'image' => 'required|mimes:jpg,jpeg,png|max:2000',
-        ]);
+
+        // $this->validate($request, [
+        //     'titre' => 'required',
+        //     'description' => 'required|min:10|max:30000',
+        //     'image' => 'required|mimes:jpg,jpeg,png|max:2000',
+        // ]);
+
         $gastronomie = Gastronomie::findOrFail($id);
-        $modifiergastronomie = $request->all();
+        $gastronomie->titre =  $request->titre;
+        $gastronomie->description =  $request->description;
         if ($request->hasFile('image')) {
-            $modifiergastronomie['image'] = $request->image->store('images/actualites', 'public');
+            $gastronomie->image = $request->image->store('images/gastronomies', 'public');
         }
-        $gastronomie->update($modifiergastronomie);
-        return $gastronomie;
+        $gastronomie->save();
+        $respone = [
+            'gastronomie' => $gastronomie,
+        ];
+        return response($respone, 201);
+
+
     }
 
     /**
