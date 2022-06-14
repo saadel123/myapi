@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Partage;
 use App\Models\User;
 use App\Rules\MatchOldPassword;
 use Illuminate\Http\Request;
@@ -41,22 +42,6 @@ class UserController extends Controller
             $user->save();
             return response()->json(['message' => 'Votre mot de passe a été mis à jour'], 200);
         }
-
-        //User::find($id)->update(['password' => Hash::make($request->new_password)]);
-
-
-        // $request->validate([
-        //     'current_password' => ['required'],
-        //     'new_password' => ['required'],
-        //     'new_confirm_password' => ['same:new_password'],
-        // ]);
-        // $user = User::findOrFail($id);
-        // $user->password = Hash::make($request->new_password);
-        // $user->save();
-        // //User::find(auth()->user()->$id)->update(['password' => ]);
-        // return [
-        //     'message' => 'Votre mot de passe a été mis à jour'
-        // ];
     }
 
     /**

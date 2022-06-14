@@ -90,10 +90,10 @@
     Route::post('/reservations/{id}', [ReservezController::class, 'update']);<br>
     Route::delete('/reservations/{id}', [ReservezController::class, 'destroy']);<br>
     <h3>Commentaires</h3>
-    Route::get('/cmts', [CommentaireController::class, 'index']);<br>
-    Route::post('/cmts', [CommentaireController::class, 'store']);<br>
-    Route::post('/cmts/{id}', [CommentaireController::class, 'update']);<br>
-    Route::delete('/cmts/{id}', [CommentaireController::class, 'destroy']);<br>
+    Route::get('/commentaires', [CommentaireController::class, 'index']);<br>
+    Route::post('/commentaires', [CommentaireController::class, 'store']);<br>
+    Route::post('/commentaires/{id}', [CommentaireController::class, 'update']);<br>
+    Route::delete('/commentaires/{id}', [CommentaireController::class, 'destroy']);<br>
     <h3>Hotels</h3>
     Route::get('/hotels', [HotelController::class, 'index']); <br>
     Route::post('/hotels', [HotelController::class, 'store']); <br>

@@ -32,6 +32,7 @@ class PartageController extends Controller
         // ]);
 
         $partage = Partage::create([
+            'user_id' => $request->user_id,
             'titre' => $request->titre,
             'slug' =>  Str::slug($request->titre),
             'description' => $request->description,
@@ -41,6 +42,16 @@ class PartageController extends Controller
             'partage' => $partage,
         ];
         return response($respone, 201);
+    }
+
+    public function mesPartages($id)
+    {
+        if ($id) {
+            $partages = Partage::whereUserId($id)->get();
+            return response()->json(['partages' => $partages], 200);
+        } else {
+            return response()->json(['message' => 'User not found'], 404);
+        }
     }
 
     /**
@@ -72,6 +83,8 @@ class PartageController extends Controller
         $partage->description =  $request->description;
         if ($request->hasFile('image')) {
             $partage->image = $request->image->store('images/partages', 'public');
+        } else {
+            unset($partage->image);
         }
         $partage->save();
         $respone = [

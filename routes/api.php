@@ -79,10 +79,12 @@ Route::delete('/commentpartage/{id}', [CommentPartageController::class, 'destroy
 
 /******Partaage******* */
 Route::get('/partages', [PartageController::class, 'index']);
-Route::post('/partages', [PartageController::class, 'store']);
+
+
+
 Route::get('/partages/{slug}', [PartageController::class, 'show']);
-Route::post('/partages/{id}', [PartageController::class, 'update']);
-Route::delete('/partages/{id}', [PartageController::class, 'destroy']);
+
+
 Route::get('/partages/search/{name}', [PartageController::class, 'search']);
 /******EndPartaage******* */
 
@@ -148,7 +150,7 @@ Route::post('/commentaires', [CommentaireController::class, 'store']);
 Route::post('/commentaires/{id}', [CommentaireController::class, 'update']);
 Route::delete('/commentaires/{id}', [CommentaireController::class, 'destroy']);
 
-Route::post('/saveme', [ImageController::class, 'store']);
+Route::post('/sauvegarder-images', [ImageController::class, 'store']);
 
 
 Route::resource('chambres', ChambreController::class);
@@ -197,6 +199,10 @@ Route::post('/registerpro', [AuthController::class, 'registerPro']);
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::post('/partages', [PartageController::class, 'store']);
+    Route::post('/partages/{id}', [PartageController::class, 'update']);
+    Route::delete('/partages/{id}', [PartageController::class, 'destroy']);
+    Route::get('/partages/user/{id}', [PartageController::class, 'mesPartages']);
     Route::post('/users/{id}', [UserController::class, 'update']);
     Route::post('/updatepassword/{id}', [UserController::class, 'updatePassword']);
     Route::get('/users', [UserController::class, 'index']);
