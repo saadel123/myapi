@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Activite;
+use App\Models\Service;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
-class ActiviteController extends Controller
+class ServiceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +14,7 @@ class ActiviteController extends Controller
      */
     public function index()
     {
-        return Activite::orderBy('created_at', 'DESC')->get();
+        return Service::all();
     }
 
     /**
@@ -26,21 +25,15 @@ class ActiviteController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'nom' => 'required',
-            'description' => 'required|min:10|max:30000',
-            //'tel' => 'required',
-            'adresse' => 'required',
-            'image' => 'required|mimes:jpg,jpeg,png|max:2000',
-            //'email' => 'required|unique:hotels',
+        $service = Service::create([
+            'id_hotel' => $request->id_hotel,
+            'nom' => $request->nom,
+            'avatar' => $request->avatar->store('images/services', 'public'),
         ]);
-        $activites = $request->all();
-        if ($request->hasFile('image')) {
-            $activites['image'] = $request->image->store('images/activites', 'public');
-        }
-        $activites['slug'] = Str::slug($request->nom);
-
-        return Activite::create($activites);
+        $respone = [
+            'service' => $service,
+        ];
+        return response($respone, 201);
     }
 
     /**
@@ -49,9 +42,9 @@ class ActiviteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($slug)
+    public function show($id)
     {
-        return Activite::whereSlug($slug)->with('user','type_activite','images','commentaires.user')->first();
+        //
     }
 
     /**

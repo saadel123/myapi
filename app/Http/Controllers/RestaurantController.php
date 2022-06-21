@@ -15,7 +15,7 @@ class RestaurantController extends Controller
      */
     public function index()
     {
-        return Restaurant::all();
+        return Restaurant::orderBy('created_at', 'DESC')->get();
     }
 
     /**
@@ -51,7 +51,7 @@ class RestaurantController extends Controller
      */
     public function show($slug)
     {
-        return Restaurant::whereSlug($slug)->with('images','catmenus.menus','commentaires.user')->first();
+        return Restaurant::whereSlug($slug)->with('user','images','catmenus.menus','commentaires.user')->first();
     }
 
     /**

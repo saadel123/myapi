@@ -34,8 +34,19 @@ class ReservezController extends Controller
             'message' => 'required',
         ]);
         $reservez = $request->all();
-        Mail::to('administrateur@directbusiness.ma')->send(new ReservezMail($reservez));
+        $owner_email = $request->owner_email;
+        if (!empty($owner_email)) {
+            Mail::to($owner_email)->send(new ReservezMail($reservez));
+        }
         return Reservez::create($reservez);
+
+        // $reservez = Reservez::create([
+        //     'username' => $request->username,
+        //     'email' =>  $request->email,
+        //     'subject' => $request->subject,
+        //     'message' => $request->message
+        //     'owner_email' => $request->message
+        // ]);
     }
 
     /**

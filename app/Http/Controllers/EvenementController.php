@@ -16,7 +16,7 @@ class EvenementController extends Controller
      */
     public function index()
     {
-        return Evenement::all();
+        return Evenement::orderBy('created_at', 'DESC')->get();
     }
 
     /**

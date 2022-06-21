@@ -15,7 +15,7 @@ class GastronomieController extends Controller
      */
     public function index()
     {
-        return Gastronomie::all();
+        return Gastronomie::orderBy('created_at', 'DESC')->get();
     }
 
     /**

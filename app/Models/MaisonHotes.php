@@ -24,19 +24,22 @@ class MaisonHotes extends Model
         'instagram' ,
         'tiktok' ,
         'nb_visite',
-        'image' 
+        'image'
     ];
+    public function user(){
+        return $this->belongsTo(User::class,'user_id');
+    }
     public function ville(){
         return $this->belongsTo(Ville::class,'ville_id');
     }
     public function images(){
         return $this->hasMany(Image::class,'id_maison_hote');
     }
-    public function chambres() 
+    public function chambres()
     {
         return $this->hasMany(Chambre::class,'id_maison_hote');
     }
-    public function commentaires() 
+    public function commentaires()
     {
         return $this->hasMany(Commentaire::class,'id_maison_hote');
     }

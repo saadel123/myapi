@@ -15,7 +15,7 @@ class GuidesTouristiqueController extends Controller
      */
     public function index()
     {
-        return GuidesTouristique::all();
+        return GuidesTouristique::orderBy('created_at', 'DESC')->get();
     }
 
     /**
@@ -51,7 +51,7 @@ class GuidesTouristiqueController extends Controller
      */
     public function show($slug)
     {
-        return GuidesTouristique::whereSlug($slug)->with('langue_guides.langue','type_activite','images','commentaires.user')->first();
+        return GuidesTouristique::whereSlug($slug)->with('user','langue_guides.langue','type_activite','images','commentaires.user')->first();
     }
 
     /**

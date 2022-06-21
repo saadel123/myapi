@@ -15,7 +15,7 @@ class ActualiteController extends Controller
      */
     public function index()
     {
-        return Actualite::all();
+        return Actualite::orderBy('created_at', 'DESC')->get();
     }
 
     /**

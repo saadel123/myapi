@@ -11,6 +11,7 @@ use App\Http\Controllers\EvenementController;
 use App\Http\Controllers\GastronomieController;
 use App\Http\Controllers\GuidesTouristiqueController;
 use App\Http\Controllers\HotelController;
+use App\Http\Controllers\HotelServiceController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\LieuxController;
 use App\Http\Controllers\MaisonHotesController;
@@ -18,6 +19,7 @@ use App\Http\Controllers\PartageController;
 use App\Http\Controllers\ReservezController;
 use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\RiadController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\TemoignagesController;
 use App\Http\Controllers\TypeChambreController;
 use App\Http\Controllers\UserController;
@@ -39,6 +41,13 @@ use Illuminate\Support\Facades\Route;
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+
+/******Service******* */
+Route::post('/services', [ServiceController::class, 'store']);
+Route::get('/services', [ServiceController::class, 'index']);
+Route::post('/hotelservices', [HotelServiceController::class, 'store']);
+Route::post('/hotel-liste-services', [HotelServiceController::class, 'storeArray']);
+/******Guide Service******* */
 
 Route::post('/saveactv', [ActiviteImagesCotroller::class, 'store']);
 
@@ -79,12 +88,10 @@ Route::delete('/commentpartage/{id}', [CommentPartageController::class, 'destroy
 
 /******Partaage******* */
 Route::get('/partages', [PartageController::class, 'index']);
-
-
-
+Route::post('/partages', [PartageController::class, 'store']);
+Route::post('/partages/{id}', [PartageController::class, 'update']);
+Route::delete('/partages/{id}', [PartageController::class, 'destroy']);
 Route::get('/partages/{slug}', [PartageController::class, 'show']);
-
-
 Route::get('/partages/search/{name}', [PartageController::class, 'search']);
 /******EndPartaage******* */
 
@@ -150,11 +157,12 @@ Route::post('/commentaires', [CommentaireController::class, 'store']);
 Route::post('/commentaires/{id}', [CommentaireController::class, 'update']);
 Route::delete('/commentaires/{id}', [CommentaireController::class, 'destroy']);
 
-Route::post('/sauvegarder-images', [ImageController::class, 'store']);
+Route::post('/images', [ImageController::class, 'store']);
 
 
 Route::resource('chambres', ChambreController::class);
 Route::resource('typechambres', TypeChambreController::class);
+Route::post('/liste-chambres', [ChambreController::class, 'storeArray']);
 
 
 Route::get('/villes', [VilleController::class, 'index']);
@@ -198,10 +206,9 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/registerpro', [AuthController::class, 'registerPro']);
 Route::post('/login', [AuthController::class, 'login']);
 
+
+
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::post('/partages', [PartageController::class, 'store']);
-    Route::post('/partages/{id}', [PartageController::class, 'update']);
-    Route::delete('/partages/{id}', [PartageController::class, 'destroy']);
     Route::get('/partages/user/{id}', [PartageController::class, 'mesPartages']);
     Route::post('/users/{id}', [UserController::class, 'update']);
     Route::post('/updatepassword/{id}', [UserController::class, 'updatePassword']);

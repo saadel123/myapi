@@ -28,6 +28,10 @@ class Activite extends Model
         'image',
         'nb_visite'
     ];
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
     public function ville()
     {
         return $this->belongsTo(Ville::class, 'ville_id');

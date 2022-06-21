@@ -16,7 +16,7 @@ class RiadController extends Controller
      */
     public function index()
     {
-        return Riad::with('ville')->get();
+        return Riad::with('ville')->orderBy('created_at', 'DESC')->get();
     }
 
     /**
@@ -66,7 +66,7 @@ class RiadController extends Controller
      */
     public function show($slug)
     {
-        return Riad::whereSlug($slug)->with('ville','images','commentaires.user','chambres.type_chambres')->first();
+        return Riad::whereSlug($slug)->with('user','ville','images','commentaires.user','chambres.type_chambres')->first();
     }
     public function id($id)
     {

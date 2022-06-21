@@ -16,7 +16,7 @@ class LieuxController extends Controller
      */
     public function index()
     {
-        return Lieux::all();
+        return Lieux::orderBy('created_at', 'DESC')->get();
     }
 
     /**

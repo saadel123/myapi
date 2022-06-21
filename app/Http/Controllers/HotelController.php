@@ -16,7 +16,7 @@ class HotelController extends Controller
      */
     public function index()
     {
-        return Hotel::with('ville', 'images')->get();
+        return Hotel::with('ville', 'images')->orderBy('created_at', 'DESC')->get();
     }
 
     /**
@@ -27,9 +27,11 @@ class HotelController extends Controller
      */
     public function store(Request $request)
     {
+        /*
         if (!$request->hasFile('images')) {
             return response()->json(['In order to continue, you must choose at least one image'], 400);
         }
+
         $this->validate($request, [
             'nom' => 'required',
             'description' => 'required|min:10|max:30000',
@@ -39,25 +41,26 @@ class HotelController extends Controller
             'images.*' => 'required|image|mimes:jpg,jpeg,png,gif|max:2048'
             //'email' => 'required|unique:hotels',
         ]);
+         */
         $hotels = $request->all();
         if ($request->hasFile('image')) {
             $hotels['image'] = $request->image->store('images/hotels', 'public');
         }
         $hotels['slug'] = Str::slug($request->nom . ' ' . $request->id, '-');
         $listhotels = Hotel::create($hotels);
-
-        /* multiple images code (Image Table)*/
-        foreach ($request->file('images') as $mediaFiles) {
-            $path = $mediaFiles->store('images/hotels', 'public');
-            $name = $mediaFiles->getClientOriginalName();
-            $save = new Image();
-            $save->libelle = $name;
-            $save->image = $path;
-            $save->id_hotel = $listhotels['id'];
-            $save->save();
-        }
-
         return $listhotels;
+
+
+        // foreach ($request->file('images') as $mediaFiles) {
+        //     $path = $mediaFiles->store('images/hotels', 'public');
+        //     $name = $mediaFiles->getClientOriginalName();
+        //     $save = new Image();
+        //     $save->libelle = $name;
+        //     $save->image = $path;
+        //     $save->id_hotel = $listhotels['id'];
+        //     $save->save();
+        // }
+
     }
     /**
      * Display the specified resource.
@@ -67,7 +70,7 @@ class HotelController extends Controller
      */
     public function show($slug)
     {
-        return Hotel::whereSlug($slug)->with('ville', 'images', 'commentaires.user', 'chambres.type_chambres')->first();
+        return Hotel::whereSlug($slug)->with('user','hotel_service.service', 'ville', 'images', 'commentaires.user', 'chambres.type_chambres')->first();
     }
 
     public function id($id)

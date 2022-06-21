@@ -5,24 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Reservez extends Model
+class Service extends Model
 {
     use HasFactory;
-    protected $table = 'reservezs';
-    protected $fillable = [
-        'username',
-        'email',
-        'tel',
-        'subject',
-        'message',
-        'user_id',
-        'id_hotel',
-        'id_riad',
-        'id_maison_hote',
-        'id_restaurant',
-        'id_activite',
-        'id_guide'
 
+    protected $fillable = [
+        'id_hotel',
+        'nom',
+        'avatar',
     ];
     public function hotel()
     {

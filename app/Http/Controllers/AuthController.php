@@ -22,7 +22,7 @@ class AuthController extends Controller
             'name' => 'required|string',
             'email' => 'required|string|unique:users,email',
             'confirmation_de_adresse_email' => 'required|string|same:email',
-            'password' => ['required','string',Password::min(8)],
+            'password' => ['required', 'string', Password::min(8)],
             'confirmation_de_mot_de_passe' => 'required|same:password'
         ]);
         $user = User::create([
@@ -43,15 +43,17 @@ class AuthController extends Controller
     public function registerPro(Request $request)
     {
         $fields = $request->validate([
-            'name' => 'required|string',
+            'nom' => 'required|string',
+            'prenom' => 'required|string',
             'email' => 'required|string|unique:users,email',
             'confirmation_de_adresse_email' => 'required|string|same:email',
-            'password' => 'required|string',
+            'password' => ['required', 'string', Password::min(8)],
             'confirmation_de_mot_de_passe' => 'required|same:password'
         ]);
         $user = User::create([
             'role_id' => 2,
-            'name' => $fields['name'],
+            'nom' => $fields['nom'],
+            'prenom' => $fields['prenom'],
             'email' => $fields['email'],
             'password' => Hash::make($fields['password'])
         ]);

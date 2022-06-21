@@ -29,6 +29,10 @@ class Commentaire extends Model
     {
         return $this->belongsTo(MaisonHotes::class, 'id_maison_hote');
     }
+    public function restaurant()
+    {
+        return $this->belongsTo(Restaurant::class, 'id_restaurant');
+    }
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');

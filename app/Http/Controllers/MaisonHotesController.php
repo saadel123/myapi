@@ -11,7 +11,7 @@ class MaisonHotesController extends Controller
 {
     public function index()
     {
-        return MaisonHotes::with('ville')->get();
+        return MaisonHotes::with('ville')->orderBy('created_at', 'DESC')->get();
     }
 
     /**
@@ -59,7 +59,7 @@ class MaisonHotesController extends Controller
      */
     public function show($slug)
     {
-        return MaisonHotes::whereSlug($slug)->with('ville','images','commentaires.user','chambres.type_chambres')->first();
+        return MaisonHotes::whereSlug($slug)->with('user','ville','images','commentaires.user','chambres.type_chambres')->first();
     }
 
     /**

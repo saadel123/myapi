@@ -10,8 +10,9 @@ class Chambre extends Model
     use HasFactory;
     protected $table = 'chambres';
     protected $fillable = [
-        'libelle',
-        'description',
+        'options',
+        'prix',
+        'nbr_personnes',
         'id_hotel',
         'id_riad',
         'id_maison_hote',
@@ -29,8 +30,8 @@ class Chambre extends Model
     {
         return $this->belongsTo(MaisonHotes::class, 'id_maison_hote');
     }
-    public function type_chambres() 
+    public function type_chambres()
     {
-        return $this->hasMany(Type_chambre::class,'id_chambre');
+        return $this->belongsTo(Type_chambre::class,'id_type_chambre');
     }
 }

@@ -33,12 +33,28 @@ class ImageController extends Controller
         ]);
 
         foreach ($request->file('images') as $mediaFiles) {
-            $path = $mediaFiles->store('images/riads', 'public');
+
             //$name = $mediaFiles->getClientOriginalName();
             $save = new Image();
+            if (!empty($request->id_riad)) {
+                $save->id_riad = $request->id_riad;
+                $path = $mediaFiles->store('images/riads', 'public');
+            }
+            if (!empty($request->id_hotel)) {
+                $save->id_hotel = $request->id_hotel;
+                $path = $mediaFiles->store('images/hotels', 'public');
+            }
+            if (!empty($request->id_maison_hote)) {
+                $save->id_maison_hote = $request->id_maison_hote;
+                $path = $mediaFiles->store('images/maisons', 'public');
+            }
+            if (!empty($request->id_restaurant)) {
+                $save->id_restaurant = $request->id_restaurant;
+                $path = $mediaFiles->store('images/restaurants', 'public');
+            }
+
             //$save->libelle = $name;
             $save->image = $path;
-            $save->id_riad = 2;
             $save->save();
         }
 

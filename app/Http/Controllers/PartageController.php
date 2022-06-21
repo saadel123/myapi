@@ -15,7 +15,7 @@ class PartageController extends Controller
      */
     public function index()
     {
-        return Partage::all();
+        return Partage::orderBy('created_at', 'DESC')->get();
     }
 
     /**
@@ -26,10 +26,11 @@ class PartageController extends Controller
      */
     public function store(Request $request)
     {
-        // $this->validate($request, [
-        //     'description' => 'required|min:10|max:30000',
-        //     'image' => 'required|mimes:jpg,jpeg,png|max:2000',
-        // ]);
+        $this->validate($request, [
+            'description' => 'required|min:10|max:30000',
+            'titre' => 'required',
+            'image' => 'required|mimes:jpg,jpeg,png|max:2000',
+        ]);
 
         $partage = Partage::create([
             'user_id' => $request->user_id,
