@@ -11,7 +11,7 @@ class MaisonHotesController extends Controller
 {
     public function index()
     {
-        return MaisonHotes::with('ville')->orderBy('created_at', 'DESC')->get();
+        return MaisonHotes::with('ville','images')->orderBy('created_at', 'DESC')->get();
     }
 
     /**
@@ -22,7 +22,7 @@ class MaisonHotesController extends Controller
      */
     public function store(Request $request)
     {
-        if (!$request->hasFile('images')) {
+       /* if (!$request->hasFile('images')) {
             return response()->json(['In order to continue, you must choose at least one image'], 400);
         }
         $request->validate([
@@ -31,7 +31,7 @@ class MaisonHotesController extends Controller
             'tel' => 'required',
             'adresse' => 'required',
             'image' => 'mimes:jpg,jpeg,png|max:2000'
-        ]);
+        ]);*/
         $maisons = $request->all();
         $maisons['slug'] = Str::slug($request->nom . ' ' . $request->id, '-');
         if ($request->hasFile('image')) {
@@ -39,7 +39,7 @@ class MaisonHotesController extends Controller
         }
         $listmaisons = MaisonHotes::create($maisons);
         /* multiple images code (Image Table)*/
-        foreach ($request->file('images') as $mediaFiles) {
+      /*  foreach ($request->file('images') as $mediaFiles) {
             $path = $mediaFiles->store('images/riads', 'public');
             $name = $mediaFiles->getClientOriginalName();
             $save = new Image();
@@ -47,7 +47,7 @@ class MaisonHotesController extends Controller
             $save->image = $path;
             $save->id_riad = $listmaisons['id'];
             $save->save();
-        }
+        }*/
         return $listmaisons;
     }
 
@@ -59,7 +59,7 @@ class MaisonHotesController extends Controller
      */
     public function show($slug)
     {
-        return MaisonHotes::whereSlug($slug)->with('user','ville','images','commentaires.user','chambres.type_chambres')->first();
+        return MaisonHotes::whereSlug($slug)->with('user','ville','hebergement_service.service','images','commentaires.user','chambres.type_chambres')->first();
     }
 
     /**

@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Chambre;
+use App\Models\HebergementService;
 use Illuminate\Http\Request;
 
-class ChambreController extends Controller
+class HebergementServiceController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,7 @@ class ChambreController extends Controller
      */
     public function index()
     {
-        return Chambre::with('type_chambres')->get();
+        //
     }
 
     /**
@@ -25,44 +25,41 @@ class ChambreController extends Controller
      */
     public function store(Request $request)
     {
-        return Chambre::create($request->all());
+        $service = HebergementService::create([
+            'id_hotel' => $request->id_hotel,
+            'id_service' => $request->id_service,
+        ]);
+        $respone = [
+            'service' => $service,
+        ];
+        return response($respone, 201);
     }
+
 
     public function storeArray(Request $request)
     {
-        $id_hotel=$request->id_hotel;
-        $id_maison_hote = $request->id_maison_hote;
+        $services = $request->services;
+        $id_hotel = $request->id_hotel;
         $id_riad = $request->id_riad;
-        $array = json_decode($request->chambres, true);
-        $id_type_chambre = '';
-        foreach ($array as $chambre) {
-
-            if($chambre['type'] == 'Chambre individuelle')
-            $id_type_chambre = 1;
-            else if($chambre['type'] == 'Chambre double')
-            $id_type_chambre = 2;
-            else
-            $id_type_chambre = 3;
-
-             $objChambre = Chambre::create([
-                    'id_type_chambre' => $id_type_chambre,
-                    'prix' => $chambre['prix'],
-                    'options' => $chambre['options'],
+        $id_maison_hote = $request->id_maison_hote;
+        $servicesArray = [];
+        foreach($services as $service){
+                $service = HebergementService::create([
                     'id_hotel' => $id_hotel,
                     'id_riad' => $id_riad,
                     'id_maison_hote' => $id_maison_hote,
+                    'id_service' => $service,
                 ]);
-
-        }
-
+           array_push($servicesArray,$service);
+         }
         $respone = [
-            'Message' => 'Success',
-            'Array' => $array
+            'services' => $servicesArray,
         ];
         return response($respone, 201);
-
     }
-
+    
+    
+    
     /**
      * Display the specified resource.
      *
@@ -71,7 +68,7 @@ class ChambreController extends Controller
      */
     public function show($id)
     {
-        //return Chambre::findOrFail($id);
+        //
     }
 
     /**
@@ -83,9 +80,7 @@ class ChambreController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $chambre = Chambre::findOrFail($id);
-        $chambre->update($request->all());
-        return $chambre;
+        //
     }
 
     /**
@@ -96,6 +91,6 @@ class ChambreController extends Controller
      */
     public function destroy($id)
     {
-        return Chambre::destroy($id);
+        //
     }
 }

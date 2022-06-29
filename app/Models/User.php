@@ -39,6 +39,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(GuidesTouristique::class, 'user_id');
     }
+    public function lieux()
+    {
+        return $this->hasMany(Lieux::class, 'user_id');
+    }
+    public function gastronomie()
+    {
+        return $this->hasMany(Gastronomie::class, 'user_id');
+    }
     /**
      * The attributes that are mass assignable.
      *

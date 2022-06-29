@@ -13,12 +13,22 @@ class CommentPartage extends Model
         'commentaire',
         'user_id',
         'id_partage',
+        'id_lieux',
+        'id_gastronomie',
         'id_activite',
         'id_guide'
     ];
     public function partage()
     {
         return $this->belongsTo(Partage::class, 'id_partage');
+    }
+    public function lieux()
+    {
+        return $this->belongsTo(Lieux::class, 'id_lieux');
+    }
+    public function gastronomie()
+    {
+        return $this->belongsTo(Gastronomie::class, 'id_gastronomie');
     }
     public function guide()
     {

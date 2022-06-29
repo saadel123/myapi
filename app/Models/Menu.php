@@ -17,8 +17,12 @@ class Menu extends Model
         'prix',
         'id_cat'
     ];
-    public function catmenu()
+    // public function catmenu()
+    // {
+    //     return $this->belongsTo(CatMenu::class, 'id_menu');
+    // }
+    public function ligne_menu()
     {
-        return $this->belongsTo(CatMenu::class, 'id_menu');
+        return $this->belongsTo(LigneMenu::class, 'id_menu');
     }
 }

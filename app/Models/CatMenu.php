@@ -11,15 +11,16 @@ class CatMenu extends Model
     protected $table = 'cat_menus';
     protected $fillable = [
         'nom',
-        'id_restaurant',
+        'avatar',
     ];
-    public function restaurant()
-    {
-        return $this->belongsTo(Restaurant::class, 'id_restaurant');
-    }
+
     public function menus()
     {
-        return $this->hasMany(Menu::class, 'id_cat');
+        return $this->hasMany(Menu::class, 'id_ligne_menu');
     }
+    // public function menus()
+    // {
+    //     return $this->hasMany(Menu::class, 'id_cat');
+    // }
 
 }

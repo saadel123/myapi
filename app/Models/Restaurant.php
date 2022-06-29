@@ -28,13 +28,20 @@ class Restaurant extends Model
         'image',
         'nb_visite'
     ];
-    public function user(){
-        return $this->belongsTo(User::class,'user_id');
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
     public function ville()
     {
         return $this->belongsTo(Ville::class, 'ville_id');
     }
+
+    public function ligne_menus()
+    {
+        return $this->hasMany(LigneMenu::class, 'id_restaurant');
+    }
+
     public function catmenus()
     {
         return $this->hasMany(CatMenu::class, 'id_restaurant');

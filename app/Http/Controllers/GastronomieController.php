@@ -52,7 +52,7 @@ class GastronomieController extends Controller
      */
     public function show($slug)
     {
-        return Gastronomie::whereSlug($slug)->first();
+        return Gastronomie::whereSlug($slug)->with('user','commentaires.user')->first();
     }
 
     /**

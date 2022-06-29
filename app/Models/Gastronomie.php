@@ -17,4 +17,11 @@ class Gastronomie extends Model
         'description',
         'image'
     ];
+    public function commentaires(){
+        return $this->hasMany(CommentPartage::class,'id_gastronomie');
+    }
+    public function user(){
+      return $this->belongsTo(User::class,'user_id');
+    }
+
 }

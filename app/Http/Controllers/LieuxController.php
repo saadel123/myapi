@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Gastronomie;
+
 use App\Models\Lieux;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -32,7 +32,7 @@ class LieuxController extends Controller
         //     'description' => 'required|min:10|max:30000',
         //     'image' => 'required|mimes:jpg,jpeg,png|max:2000',
         // ]);
-        $lieux = Gastronomie::create([
+        $lieux = Lieux::create([
             'titre' => $request->titre,
             'slug' =>  Str::slug($request->titre),
             'description' => $request->description,
@@ -52,7 +52,7 @@ class LieuxController extends Controller
      */
     public function show($slug)
     {
-        return Lieux::whereSlug($slug)->first();
+        return Lieux::whereSlug($slug)->with('user','commentaires.user')->first();
     }
 
     /**
@@ -86,6 +86,6 @@ class LieuxController extends Controller
      */
     public function destroy($id)
     {
-        return Gastronomie::destroy($id);
+        return Lieux::destroy($id);
     }
 }

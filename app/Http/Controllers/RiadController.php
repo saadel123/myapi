@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Image;
+
 use App\Models\Riad;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -16,7 +16,7 @@ class RiadController extends Controller
      */
     public function index()
     {
-        return Riad::with('ville')->orderBy('created_at', 'DESC')->get();
+        return Riad::with('ville', 'images')->orderBy('created_at', 'DESC')->get();
     }
 
     /**
@@ -27,9 +27,12 @@ class RiadController extends Controller
      */
     public function store(Request $request)
     {
+
+    /*
         if (!$request->hasFile('images')) {
             return response()->json(['In order to continue, you must choose at least one image'], 400);
         }
+
         $request->validate([
             'nom' => 'required',
             'description' => 'required|min:10|max:30000',
@@ -37,14 +40,14 @@ class RiadController extends Controller
             'adresse' => 'required',
             'image' => 'mimes:jpg,jpeg,png|max:2000'
             //'email' => 'required|unique:riads',
-        ]);
+        ]);*/
         $riads = $request->all();
         $riads['slug'] = Str::slug($request->nom . ' ' . $request->id, '-');
         if ($request->hasFile('image')) {
             $riads['image'] = $request->image->store('images/riads', 'public');
         }
         $listriads = Riad::create($riads);
-        /* multiple images code (Image Table)*/
+        /* multiple images code (Image Table)
         foreach ($request->file('images') as $mediaFiles) {
             $path = $mediaFiles->store('images/riads', 'public');
             $name = $mediaFiles->getClientOriginalName();
@@ -53,7 +56,7 @@ class RiadController extends Controller
             $save->image = $path;
             $save->id_riad = $listriads['id'];
             $save->save();
-        }
+        }*/
 
         return $listriads;
     }
@@ -66,7 +69,8 @@ class RiadController extends Controller
      */
     public function show($slug)
     {
-        return Riad::whereSlug($slug)->with('user','ville','images','commentaires.user','chambres.type_chambres')->first();
+       // return Riad::whereSlug($slug)->with('user','ville','images','commentaires.user','chambres.type_chambres')->first();
+        return Riad::whereSlug($slug)->with('user','hebergement_service.service', 'ville', 'images', 'commentaires.user', 'chambres.type_chambres')->first();
     }
     public function id($id)
     {

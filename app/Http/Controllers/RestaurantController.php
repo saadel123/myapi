@@ -51,7 +51,7 @@ class RestaurantController extends Controller
      */
     public function show($slug)
     {
-        return Restaurant::whereSlug($slug)->with('user','images','catmenus.menus','commentaires.user')->first();
+        return Restaurant::whereSlug($slug)->with('ligne_menus.cat_menu','user','images','commentaires.user')->first();
     }
 
     /**

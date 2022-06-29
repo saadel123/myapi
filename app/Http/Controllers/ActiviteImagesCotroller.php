@@ -38,7 +38,9 @@ class ActiviteImagesCotroller extends Controller
             $save = new ActiviteImage();
             $save->libelle = $name;
             $save->image = $path;
-            $save->id_guide = 2;
+            $save->id_activite = $request->id_activite;
+            $save->id_guide = $request->id_guide;
+            $save->id_lieux = $request->id_lieux;
             $save->save();
         }
 

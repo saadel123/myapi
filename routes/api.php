@@ -15,6 +15,7 @@ use App\Http\Controllers\HotelServiceController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\LieuxController;
 use App\Http\Controllers\MaisonHotesController;
+use App\Http\Controllers\MenuController;
 use App\Http\Controllers\PartageController;
 use App\Http\Controllers\ReservezController;
 use App\Http\Controllers\RestaurantController;
@@ -41,6 +42,12 @@ use Illuminate\Support\Facades\Route;
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+/******Menu******* */
+Route::post('/menu', [MenuController::class, 'store']);
+Route::get('/menu', [MenuController::class, 'index']);
+Route::get('/menu', [MenuController::class, 'show']);
+Route::post('/menu-liste', [MenuController::class, 'storeArray']);
+/******EndMenu******* */
 
 /******Service******* */
 Route::post('/services', [ServiceController::class, 'store']);
@@ -49,7 +56,7 @@ Route::post('/hotelservices', [HotelServiceController::class, 'store']);
 Route::post('/hotel-liste-services', [HotelServiceController::class, 'storeArray']);
 /******Guide Service******* */
 
-Route::post('/saveactv', [ActiviteImagesCotroller::class, 'store']);
+Route::post('/post-mages', [ActiviteImagesCotroller::class, 'store']);
 
 /******Guide Touristique******* */
 Route::get('/guides-touristique', [GuidesTouristiqueController::class, 'index']);

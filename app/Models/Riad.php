@@ -47,4 +47,12 @@ class Riad extends Model
     {
         return $this->hasManyThrough(Type_chambre::class, Chambre::class,'id_riad','id_chambre');
     }
+    public function services()
+    {
+        return $this->hasMany(Service::class, 'id_riad');
+    }
+    public function hebergement_service()
+    {
+        return $this->hasMany(HebergementService::class, 'id_riad');
+    }
 }

@@ -17,4 +17,8 @@ class ActiviteImage extends Model
     {
         return $this->belongsTo(Activite::class, 'id_activite');
     }
+    public function lieux()
+    {
+        return $this->belongsTo(Lieux::class, 'id_lieux');
+    }
 }
