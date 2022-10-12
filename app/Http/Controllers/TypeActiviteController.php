@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Commentaire;
-use Egulias\EmailValidator\Warning\Comment;
+use App\Models\TypeActivite;
 use Illuminate\Http\Request;
 
-class CommentaireController extends Controller
+class TypeActiviteController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +14,29 @@ class CommentaireController extends Controller
      */
     public function index()
     {
-        return Commentaire::all();
+        return TypeActivite::all();
+    }
+
+    public function storeArray(Request $request)
+    {
+        $id_activite = $request->id_activite;
+        $array = json_decode($request->typeActivites, true);
+        // $id_type_chambre = '';
+        foreach ($array as $typeactvites) {
+
+            $objMenu = TypeActivite::create([
+                'activite' => $typeactvites['activite'],
+                'duree' => $typeactvites['duree'],
+                'prix_actv' => $typeactvites['prix_actv'],
+                'id_activite' => $id_activite,
+            ]);
+        }
+
+        $respone = [
+            'Message' => 'Success',
+            'Array' => $array
+        ];
+        return response($respone, 201);
     }
 
     /**
@@ -26,10 +47,7 @@ class CommentaireController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'commentaire' => 'required|min:5'
-        ]);
-        return Commentaire::create($request->all());
+        TypeActivite::create($request->all());
     }
 
     /**
@@ -40,8 +58,7 @@ class CommentaireController extends Controller
      */
     public function show($id)
     {
-        return Commentaire::whereId($id)->with('user')->first();
-
+        //
     }
 
     /**
@@ -53,9 +70,9 @@ class CommentaireController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $commentaire = Commentaire::findOrFail($id);
-        $commentaire->update($request->all());
-        return $commentaire;
+        $tchambre = TypeActivite::findOrFail($id);
+        $tchambre->update($request->all());
+        return $tchambre;
     }
 
     /**
@@ -66,6 +83,6 @@ class CommentaireController extends Controller
      */
     public function destroy($id)
     {
-        return Commentaire::destroy($id);
+        return TypeActivite::destroy($id);
     }
 }

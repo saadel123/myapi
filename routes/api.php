@@ -10,9 +10,12 @@ use App\Http\Controllers\CommentPartageController;
 use App\Http\Controllers\EvenementController;
 use App\Http\Controllers\GastronomieController;
 use App\Http\Controllers\GuidesTouristiqueController;
+use App\Http\Controllers\HebergementServiceController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\HotelServiceController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\LangueController;
+use App\Http\Controllers\LangueGuideContoller;
 use App\Http\Controllers\LieuxController;
 use App\Http\Controllers\MaisonHotesController;
 use App\Http\Controllers\MenuController;
@@ -22,9 +25,12 @@ use App\Http\Controllers\RestaurantController;
 use App\Http\Controllers\RiadController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\TemoignagesController;
+use App\Http\Controllers\TypeActiviteController;
 use App\Http\Controllers\TypeChambreController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserFavoriteController;
 use App\Http\Controllers\VilleController;
+use App\Models\CommentPartage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -42,18 +48,50 @@ use Illuminate\Support\Facades\Route;
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+
+/******favorites******* */
+Route::get('/favorites', [UserFavoriteController::class, 'index']);
+Route::post('/favorites', [UserFavoriteController::class, 'store']);
+Route::delete('/favorites/{id}', [UserFavoriteController::class, 'destroy']);
+Route::get('/user_favorite/{id}', [UserFavoriteController::class, 'show']);
+/******Endfavorites******* */
+
+
+/******Langue******* */
+Route::post('/langues-guide', [LangueGuideContoller::class, 'store']);
+Route::get('/langues-guide', [LangueGuideContoller::class, 'index']);
+Route::get('/langues-guide/{id}', [LangueGuideContoller::class, 'show']);
+Route::post('/langue-guide-liste', [LangueGuideContoller::class, 'storeArray']);
+/******End Lnague******* */
+
+/******Langue******* */
+Route::post('/langues', [LangueController::class, 'store']);
+Route::get('/langues', [LangueController::class, 'index']);
+Route::get('/langues/{id}', [LangueController::class, 'show']);
+Route::post('/langue-liste', [LangueController::class, 'storeArray']);
+/******End Lnague******* */
+
+
+/******TypeActivite******* */
+Route::post('/type-activites', [TypeActiviteController::class, 'store']);
+Route::get('/type-activites', [TypeActiviteController::class, 'index']);
+Route::get('/type-activites/{id}', [TypeActiviteController::class, 'show']);
+Route::post('/activite-liste', [TypeActiviteController::class, 'storeArray']);
+/******EndTypeActivite******* */
+
 /******Menu******* */
 Route::post('/menu', [MenuController::class, 'store']);
 Route::get('/menu', [MenuController::class, 'index']);
-Route::get('/menu', [MenuController::class, 'show']);
+Route::get('/menu/{id}', [MenuController::class, 'show']);
 Route::post('/menu-liste', [MenuController::class, 'storeArray']);
 /******EndMenu******* */
 
 /******Service******* */
 Route::post('/services', [ServiceController::class, 'store']);
 Route::get('/services', [ServiceController::class, 'index']);
-Route::post('/hotelservices', [HotelServiceController::class, 'store']);
+// Route::post('/hotelservices', [HotelServiceController::class, 'store']);
 Route::post('/hotel-liste-services', [HotelServiceController::class, 'storeArray']);
+Route::post('/hotelservices', [HebergementServiceController::class, 'store']);
 /******Guide Service******* */
 
 Route::post('/post-mages', [ActiviteImagesCotroller::class, 'store']);
@@ -160,9 +198,16 @@ Route::post('/reservations/{id}', [ReservezController::class, 'update']);
 Route::delete('/reservations/{id}', [ReservezController::class, 'destroy']);
 
 Route::get('/commentaires', [CommentaireController::class, 'index']);
+Route::get('/commentaires/{id}', [CommentaireController::class, 'show']);
 Route::post('/commentaires', [CommentaireController::class, 'store']);
 Route::post('/commentaires/{id}', [CommentaireController::class, 'update']);
 Route::delete('/commentaires/{id}', [CommentaireController::class, 'destroy']);
+
+Route::get('/commentaires_partage', [CommentPartageController::class, 'index']);
+Route::get('/commentaires_partage/{id}', [CommentPartageController::class, 'show']);
+Route::post('/commentaires_partage', [CommentPartageController::class, 'store']);
+Route::post('/commentaires_partage/{id}', [CommentPartageController::class, 'update']);
+Route::delete('/commentaires_partage/{id}', [CommentPartageController::class, 'destroy']);
 
 Route::post('/images', [ImageController::class, 'store']);
 

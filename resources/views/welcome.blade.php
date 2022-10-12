@@ -10,6 +10,7 @@
 
 <body>
     <h3>Guides touristique</h3>
+
     Route::get('/guides-touristique', [GuidesTouristiqueController::class, 'index']);<br>
     Route::post('/guides-touristique', [GuidesTouristiqueController::class, 'store']);<br>
     Route::get('/guides-touristique/{slug}', [GuidesTouristiqueController::class, 'show']);<br>

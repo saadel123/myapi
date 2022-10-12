@@ -21,6 +21,10 @@ class Menu extends Model
     // {
     //     return $this->belongsTo(CatMenu::class, 'id_menu');
     // }
+    // public function ligne_menu()
+    // {
+    //     return $this->belongsTo(LigneMenu::class, 'id_menu');
+    // }
     public function ligne_menu()
     {
         return $this->belongsTo(LigneMenu::class, 'id_menu');

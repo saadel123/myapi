@@ -12,7 +12,7 @@ class LigneMenu extends Model
     protected $fillable = [
         'id_restaurant',
         'id_menu',
-        'id_cat_menu'
+        'id_cat_menu',
     ];
 
     public function cat_menu()
@@ -23,12 +23,16 @@ class LigneMenu extends Model
     {
         return $this->belongsTo(Restaurant::class, 'id_restaurant');
     }
-
-
-
-     public function menus()
+    public function menus()
     {
-        return $this->belongsToMany(Menu::class, 'id_menu');
+        return $this->hasMany(Menu::class, 'id_menu');
     }
+
+
+
+    //  public function menus()
+    // {
+    //     return $this->belongsToMany(Menu::class, 'id_menu');
+    // }
 
 }

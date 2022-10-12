@@ -24,7 +24,9 @@ class Riad extends Model
         'instagram' ,
         'tiktok' ,
         'nb_visite',
-        'image'
+        'whatsapp' ,
+        'prix_min',
+        'prix_max'
     ];
     public function user(){
         return $this->belongsTo(User::class,'user_id');

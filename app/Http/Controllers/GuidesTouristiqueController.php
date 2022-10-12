@@ -15,7 +15,7 @@ class GuidesTouristiqueController extends Controller
      */
     public function index()
     {
-        return GuidesTouristique::orderBy('created_at', 'DESC')->get();
+        return GuidesTouristique::with('images')->orderBy('created_at', 'DESC')->get();
     }
 
     /**
@@ -26,18 +26,18 @@ class GuidesTouristiqueController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'nom' => 'required',
-            'description' => 'required|min:10|max:30000',
-            //'tel' => 'required',
-            'adresse' => 'required',
-            'image' => 'required|mimes:jpg,jpeg,png|max:2000',
-            'user_id' => 'required|unique:guides_touristiques',
-        ]);
+        // $this->validate($request, [
+        //     'nom' => 'required',
+        //     'description' => 'required|min:10|max:30000',
+        //     //'tel' => 'required',
+        //     'adresse' => 'required',
+        //     'image' => 'required|mimes:jpg,jpeg,png|max:2000',
+        //     'user_id' => 'required|unique:guides_touristiques',
+        // ]);
         $gdTour = $request->all();
-        if ($request->hasFile('image')) {
-            $gdTour['image'] = $request->image->store('images/guides-touristique', 'public');
-        }
+        // if ($request->hasFile('image')) {
+        //     $gdTour['image'] = $request->image->store('images/guides-touristique', 'public');
+        // }
         $gdTour['slug'] = Str::slug($request->nom);
 
         return GuidesTouristique::create($gdTour);

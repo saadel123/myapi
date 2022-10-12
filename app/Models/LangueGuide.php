@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class LangueGuide extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'id_guide',
+        'id_langue',
+    ];
     public function guide()
     {
         return $this->belongsTo(GuidesTouristique::class, 'id_guide');

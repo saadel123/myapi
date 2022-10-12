@@ -5,12 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Commentaire extends Model
+class UserFavorite extends Model
 {
     use HasFactory;
-    protected $table = 'commentaires';
+    protected $table = 'user_favorites';
     protected $fillable = [
-        'commentaire',
         'user_id',
         'id_hotel',
         'id_riad',
@@ -18,8 +17,12 @@ class Commentaire extends Model
         'id_restaurant',
         'id_activite',
         'id_guide',
-        'parent_id'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
     public function hotel()
     {
         return $this->belongsTo(Hotel::class, 'id_hotel');
@@ -36,9 +39,12 @@ class Commentaire extends Model
     {
         return $this->belongsTo(Restaurant::class, 'id_restaurant');
     }
-    public function user()
+    public function activite()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(Activite::class, 'id_activite');
+    }
+    public function guide()
+    {
+        return $this->belongsTo(GuidesTouristique::class, 'id_guide');
     }
 }
-

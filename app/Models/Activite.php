@@ -25,8 +25,12 @@ class Activite extends Model
         'instagram',
         'tiktok',
         'nbr_etoiles',
+        'whatsapp' ,
         'image',
-        'nb_visite'
+        'nb_visite',
+        'prix_min',
+        'prix_max',
+
     ];
     public function user()
     {

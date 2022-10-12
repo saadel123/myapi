@@ -52,7 +52,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        return User::findOrfail($id);
+        return User::whereId($id)->with('favorites.hotels')->get();
     }
 
     /**

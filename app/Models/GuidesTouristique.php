@@ -25,8 +25,10 @@ class GuidesTouristique extends Model
         'instagram',
         'tiktok',
         'nbr_etoiles',
-        'image',
-        'nb_visite'
+        'nb_visite',
+        'whatsapp' ,
+        'prix_min',
+        'prix_max'
     ];
     public function user()
     {

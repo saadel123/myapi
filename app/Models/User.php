@@ -47,6 +47,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Gastronomie::class, 'user_id');
     }
+    public function favorites()
+    {
+        return $this->hasMany(UserFavorite::class, 'user_id');
+    }
+    public function hotelFavorites()
+    {
+        return $this->belongsToMany(Hotel::class, 'user_favorites')->withTimestamps();
+    }
     /**
      * The attributes that are mass assignable.
      *

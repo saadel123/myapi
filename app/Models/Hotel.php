@@ -25,8 +25,10 @@ class Hotel extends Model
         'instagram',
         'tiktok',
         'nbr_etoiles',
-        'image',
-        'nb_visite'
+        'nb_visite',
+        'whatsapp' ,
+        'prix_min',
+        'prix_max'
     ];
     public function user()
     {
@@ -65,5 +67,9 @@ class Hotel extends Model
     public function hotel_service()
     {
         return $this->hasMany(HebergementService::class, 'id_hotel');
+    }
+    public function user_favorite()
+    {
+        return $this->hasMany(UserFavorite::class, 'id_hotel');
     }
 }

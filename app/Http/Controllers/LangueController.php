@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Commentaire;
-use Egulias\EmailValidator\Warning\Comment;
+use App\Models\Langue;
 use Illuminate\Http\Request;
 
-class CommentaireController extends Controller
+class LangueController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +14,8 @@ class CommentaireController extends Controller
      */
     public function index()
     {
-        return Commentaire::all();
+        return Langue::all();
+
     }
 
     /**
@@ -26,10 +26,7 @@ class CommentaireController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'commentaire' => 'required|min:5'
-        ]);
-        return Commentaire::create($request->all());
+        Langue::create($request->all());
     }
 
     /**
@@ -40,7 +37,10 @@ class CommentaireController extends Controller
      */
     public function show($id)
     {
-        return Commentaire::whereId($id)->with('user')->first();
+        //
+    }
+
+    public function storeArray(){
 
     }
 
@@ -53,9 +53,9 @@ class CommentaireController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $commentaire = Commentaire::findOrFail($id);
-        $commentaire->update($request->all());
-        return $commentaire;
+        $tchambre = Langue::findOrFail($id);
+        $tchambre->update($request->all());
+        return $tchambre;
     }
 
     /**
@@ -66,6 +66,6 @@ class CommentaireController extends Controller
      */
     public function destroy($id)
     {
-        return Commentaire::destroy($id);
+        return Langue::destroy($id);
     }
 }

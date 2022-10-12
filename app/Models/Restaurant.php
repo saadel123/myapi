@@ -24,9 +24,11 @@ class Restaurant extends Model
         'website',
         'facebook',
         'instagram',
+        'nb_visite',
         'tiktok',
-        'image',
-        'nb_visite'
+        'whatsapp' ,
+        'prix_min',
+        'prix_max'
     ];
     public function user()
     {

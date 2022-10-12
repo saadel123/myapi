@@ -26,7 +26,7 @@ class CommentPartageController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'commentaire' => 'required'
+            'commentaire' => 'required|min:5'
         ]);
         return CommentPartage::create($request->all());
     }

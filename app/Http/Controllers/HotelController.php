@@ -70,7 +70,7 @@ class HotelController extends Controller
      */
     public function show($slug)
     {
-        return Hotel::whereSlug($slug)->with('user','hotel_service.service', 'ville', 'images', 'commentaires.user', 'chambres.type_chambres')->first();
+        return Hotel::whereSlug($slug)->with('user','hotel_service.service', 'ville', 'images', 'commentaires.user', 'chambres.type_chambres')->get();
     }
 
     public function id($id)

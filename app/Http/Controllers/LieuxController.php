@@ -32,12 +32,28 @@ class LieuxController extends Controller
         //     'description' => 'required|min:10|max:30000',
         //     'image' => 'required|mimes:jpg,jpeg,png|max:2000',
         // ]);
-        $lieux = Lieux::create([
-            'titre' => $request->titre,
-            'slug' =>  Str::slug($request->titre),
-            'description' => $request->description,
-            'image' => $request->image->store('images/lieux', 'public'),
-        ]);
+        //     [
+        //     'titre' => $request->titre,
+        //     'slug' =>  Str::slug($request->titre),
+        //     'description' => $request->description,
+        // ]);
+        // 'image' => $request->image->store('images/lieux', 'public'),
+
+        $data = $request->all();
+        $data['slug'] = Str::slug($request->titre);
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->image->store('images/lieux', 'public');
+        }
+        $lieux = Lieux::create($data);
+        if ($lieux_images = $request->file('images')) {
+            foreach ($lieux_images as $image) {
+                $path = $image->store('images/lieux', 'public');
+                $lieux->images()->create([
+                    'id_lieux' => $lieux->id,
+                    'image' => $path,
+                ]);
+            }
+        }
         $respone = [
             'lieux' => $lieux,
         ];
@@ -52,7 +68,7 @@ class LieuxController extends Controller
      */
     public function show($slug)
     {
-        return Lieux::whereSlug($slug)->with('user','commentaires.user')->first();
+        return Lieux::whereSlug($slug)->with('user', 'commentaires.user')->first();
     }
 
     /**
