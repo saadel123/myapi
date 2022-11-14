@@ -78,7 +78,6 @@
     Route::get('/actualites/search/{name}', [ActualiteController::class, 'search']);<br>
 
     <h3>Restaurant</h3>
-    Route::get('/restaurants', [RestaurantController::class, 'index']);<br>
     Route::post('/restaurants', [RestaurantController::class, 'store']);<br>
     Route::get('/restaurants/{slug}', [RestaurantController::class, 'show']);<br>
     Route::post('/restaurants/{id}', [RestaurantController::class, 'update']);<br>

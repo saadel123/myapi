@@ -26,7 +26,7 @@ class AuthController extends Controller
             'confirmation_de_mot_de_passe' => 'required|same:password'
         ]);
         $user = User::create([
-            'role_id' => 3,
+            'role_id' => 1,
             'nom' => $fields['nom'],
             'prenom' => $fields['prenom'],
             'name' => $fields['name'],
@@ -46,6 +46,7 @@ class AuthController extends Controller
             'nom' => 'required|string',
             'prenom' => 'required|string',
             'email' => 'required|string|unique:users,email',
+            'type_service' => 'required',
             'confirmation_de_adresse_email' => 'required|string|same:email',
             'password' => ['required', 'string', Password::min(8)],
             'confirmation_de_mot_de_passe' => 'required|same:password'
@@ -55,6 +56,7 @@ class AuthController extends Controller
             'nom' => $fields['nom'],
             'prenom' => $fields['prenom'],
             'email' => $fields['email'],
+            'type_service' => $fields['type_service'],
             'password' => Hash::make($fields['password'])
         ]);
         $token = $user->createToken('myapptoken')->plainTextToken;

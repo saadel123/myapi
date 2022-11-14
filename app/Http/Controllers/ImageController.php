@@ -92,6 +92,6 @@ class ImageController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return Image::destroy($id);
     }
 }

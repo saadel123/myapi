@@ -26,18 +26,18 @@ class GuidesTouristiqueController extends Controller
      */
     public function store(Request $request)
     {
-        // $this->validate($request, [
-        //     'nom' => 'required',
-        //     'description' => 'required|min:10|max:30000',
-        //     //'tel' => 'required',
-        //     'adresse' => 'required',
-        //     'image' => 'required|mimes:jpg,jpeg,png|max:2000',
-        //     'user_id' => 'required|unique:guides_touristiques',
-        // ]);
+       /* $this->validate($request, [
+            'nom' => 'required',
+            'description' => 'required|min:10|max:30000',
+            //'tel' => 'required',
+            'adresse' => 'required',
+            'image' => 'required|mimes:jpg,jpeg,png|max:2000',
+            'user_id' => 'required|unique:guides_touristiques',
+        ]);*/
         $gdTour = $request->all();
-        // if ($request->hasFile('image')) {
-        //     $gdTour['image'] = $request->image->store('images/guides-touristique', 'public');
-        // }
+        if ($request->hasFile('image')) {
+            $gdTour['image'] = $request->image->store('images/guides-touristique', 'public');
+        }
         $gdTour['slug'] = Str::slug($request->nom);
 
         return GuidesTouristique::create($gdTour);
@@ -53,6 +53,11 @@ class GuidesTouristiqueController extends Controller
     {
         return GuidesTouristique::whereSlug($slug)->with('user','langue_guides.langue','type_activite','images','commentaires.user')->first();
     }
+    
+       public function findByUserId($user_id)
+    {
+        return GuidesTouristique::where('user_id',$user_id)->with('user','langue_guides.langue','type_activite','images','commentaires.user')->first();
+    }
 
     /**
      * Update the specified resource in storage.
@@ -64,6 +69,9 @@ class GuidesTouristiqueController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $guide = GuidesTouristique::findOrFail($id);
+        $guide->update($request->all());
+        return $guide;
     }
 
     /**
@@ -75,5 +83,6 @@ class GuidesTouristiqueController extends Controller
     public function destroy($id)
     {
         //
+        return GuidesTouristique::destroy($id);
     }
 }

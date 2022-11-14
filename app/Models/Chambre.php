@@ -16,7 +16,8 @@ class Chambre extends Model
         'id_hotel',
         'id_riad',
         'id_maison_hote',
-        'id_type_chambre'
+        'id_type_chambre',
+        'type'
     ];
     public function hotel()
     {

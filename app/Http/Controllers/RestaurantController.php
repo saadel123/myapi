@@ -15,7 +15,7 @@ class RestaurantController extends Controller
      */
     public function index()
     {
-        return Restaurant::orderBy('created_at', 'DESC')->get();
+        return Restaurant::with('images')->orderBy('created_at', 'DESC')->get();
     }
 
     /**
@@ -26,14 +26,14 @@ class RestaurantController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+      /*  $this->validate($request, [
             'nom' => 'required',
             'description' => 'required|min:10|max:30000',
             //'tel' => 'required',
             'adresse' => 'required',
-            'image' => 'required|mimes:jpg,jpeg,png|max:2000',
+            //'image' => 'required|mimes:jpg,jpeg,png|max:2000',
             //'email' => 'required|unique:hotels',
-        ]);
+        ]);*/
         $restaurants = $request->all();
         if ($request->hasFile('image')) {
             $restaurants['image'] = $request->image->store('images/restaurants', 'public');
@@ -51,7 +51,23 @@ class RestaurantController extends Controller
      */
     public function show($slug)
     {
-        return Restaurant::whereSlug($slug)->with('ligne_menus.cat_menu.menus','user','images','commentaires.user')->first();
+        return Restaurant::whereSlug($slug)->with('ligne_menus.menus','ligne_menus.categoriemenu','user','images','commentaires.user')->first();
+    }
+    
+     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function id($id)
+    {
+        return Restaurant::with('ligne_menus.menus','ligne_menus.categoriemenu','user','images','commentaires.user')->find($id);
+    }
+    
+     public function findByUserId($user_id)
+    {
+        return Restaurant::where('user_id',$user_id)->with('ligne_menus.menus','ligne_menus.categoriemenu','user','images','commentaires.user')->first();
     }
 
     /**
@@ -63,14 +79,14 @@ class RestaurantController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
+        /*$this->validate($request, [
             'nom' => 'required',
             'description' => 'required|min:10|max:30000',
             //'tel' => 'required',
             'adresse' => 'required',
             'image' => 'required|mimes:jpg,jpeg,png|max:2000',
             //'email' => 'required|unique:hotels',
-        ]);
+        ]);*/
         $restaurants = Restaurant::findOrFail($id);
         $modifierrest = $request->all();
         if ($request->hasFile('image')) {

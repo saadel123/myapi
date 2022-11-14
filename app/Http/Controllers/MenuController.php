@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\LigneMenu;
 
 use App\Models\Menu;
 use Illuminate\Http\Request;
@@ -18,6 +19,7 @@ class MenuController extends Controller
     }
     public function storeArray(Request $request)
     {
+        /*
         $id_hotel = $request->id_hotel;
         $array = json_decode($request->chambres, true);
         $id_type_chambre = '';
@@ -44,6 +46,7 @@ class MenuController extends Controller
             'Array' => $array
         ];
         return response($respone, 201);
+        */
     }
     /**
      * Store a newly created resource in storage.
@@ -53,7 +56,25 @@ class MenuController extends Controller
      */
     public function store(Request $request)
     {
-        return Menu::create($request->all());
+        $idLigneMenu = 0;
+        $LigneMenu =  LigneMenu::where([['id_restaurant', '=', $request->id_restaurant],['id_cat_menu', '=', $request->id_categorie]])->first();
+        if($LigneMenu == null){
+        $objLigneMenu = LigneMenu::create([
+                'id_restaurant' => $request->id_restaurant,
+                'id_cat_menu' => $request->id_categorie,
+            ]);
+            $idLigneMenu = $objLigneMenu->id ;
+        }else{
+            $idLigneMenu = $LigneMenu->id ;
+        }
+            $objMenu = Menu::create([
+                'nom' => $request->nom,
+                'description' => $request->description,
+                'prix' => $request->prix,
+                'id_ligne_menu' => $idLigneMenu,
+            ]);
+            
+        return ['linge_menu'=>$idLigneMenu,'menu'=>$objMenu,'request'=>$request];    
     }
 
     /**
@@ -76,9 +97,9 @@ class MenuController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $chambre = Menu::findOrFail($id);
-        $chambre->update($request->all());
-        return $chambre;
+        $menu = Menu::findOrFail($id);
+        $menu->update($request->all());
+        return $menu;
     }
 
     /**

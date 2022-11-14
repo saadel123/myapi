@@ -10,12 +10,10 @@ class Menu extends Model
     use HasFactory;
     protected $table = 'menus';
     protected $fillable = [
-        'user_id',
         'nom',
-        'slug',
         'description',
         'prix',
-        'id_cat'
+        'id_ligne_menu'
     ];
     // public function catmenu()
     // {
@@ -25,8 +23,8 @@ class Menu extends Model
     // {
     //     return $this->belongsTo(LigneMenu::class, 'id_menu');
     // }
-    public function ligne_menu()
-    {
-        return $this->belongsTo(LigneMenu::class, 'id_menu');
-    }
+    // public function ligne_menu()
+    // {
+    //     return $this->belongsTo(LigneMenu::class, 'id_menu');
+    // }
 }

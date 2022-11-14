@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\HotelService;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\CategorieMenu;
 
-class HotelServiceController extends Controller
+class CategorieMenuController extends Controller
 {
-    /**
+  /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        return CategorieMenu::get();
     }
 
     /**
@@ -25,32 +26,7 @@ class HotelServiceController extends Controller
      */
     public function store(Request $request)
     {
-        $service = HotelService::create([
-            'id_hotel' => $request->id_hotel,
-            'id_service' => $request->id_service,
-        ]);
-        $respone = [
-            'service' => $service,
-        ];
-        return response($respone, 201);
-    }
-
-    public function storeArray(Request $request)
-    {
-        $services = $request->services;
-        $id_hotel = $request->id_hotel;
-        $servicesArray = [];
-        foreach ($services as $service) {
-            $service = HotelService::create([
-                'id_hotel' => $id_hotel,
-                'id_service' => $service,
-            ]);
-            array_push($servicesArray, $service);
-        }
-        $respone = [
-            'services' => $servicesArray,
-        ];
-        return response($respone, 201);
+        return CategorieMenu::create($request->all());
     }
 
     /**
@@ -61,7 +37,7 @@ class HotelServiceController extends Controller
      */
     public function show($id)
     {
-        //
+        //return Chambre::findOrFail($id);
     }
 
     /**
@@ -73,7 +49,9 @@ class HotelServiceController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $chambre = CategorieMenu::findOrFail($id);
+        $chambre->update($request->all());
+        return $chambre;
     }
 
     /**
@@ -84,6 +62,6 @@ class HotelServiceController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return CategorieMenu::destroy($id);
     }
 }

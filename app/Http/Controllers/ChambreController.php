@@ -25,7 +25,28 @@ class ChambreController extends Controller
      */
     public function store(Request $request)
     {
-        return Chambre::create($request->all());
+        /*
+        if($request['type'] == 'Chambre individuelle')
+            $id_type_chambre = 1;
+            else if($request['type'] == 'Chambre double')
+            $id_type_chambre = 2;
+            else
+            $id_type_chambre = 3;
+            */
+            
+            $id_hotel=$request->id_hotel;
+            $id_maison_hote = $request->id_maison_hote;
+            $id_riad = $request->id_riad;
+
+             $objChambre = Chambre::create([
+                    'type' => $request['type'],
+                    'prix' => $request['prix'],
+                    'options' => $request['options'],
+                    'id_hotel' => $id_hotel,
+                    'id_riad' => $id_riad,
+                    'id_maison_hote' => $id_maison_hote,
+             ]);
+        return $objChambre;
     }
 
     public function storeArray(Request $request)
@@ -35,17 +56,18 @@ class ChambreController extends Controller
         $id_riad = $request->id_riad;
         $array = json_decode($request->chambres, true);
         $id_type_chambre = '';
+        
         foreach ($array as $chambre) {
 
-            if($chambre['type'] == 'Chambre individuelle')
+           /* if($chambre['type'] == 'Chambre individuelle')
             $id_type_chambre = 1;
             else if($chambre['type'] == 'Chambre double')
             $id_type_chambre = 2;
             else
             $id_type_chambre = 3;
-
+            */
              $objChambre = Chambre::create([
-                    'id_type_chambre' => $id_type_chambre,
+                    'type' => $request['type'],
                     'prix' => $chambre['prix'],
                     'options' => $chambre['options'],
                     'id_hotel' => $id_hotel,
@@ -81,10 +103,34 @@ class ChambreController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id)   
     {
         $chambre = Chambre::findOrFail($id);
-        $chambre->update($request->all());
+         
+         $chambre->type  = $request['type'];
+         $chambre->prix  = $request['prix'];
+         $chambre->options  = $request['options'];
+
+        $chambre->update();
+        return $chambre;
+    }
+    
+     /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function updateChambre(Request $request, $id)   
+    {
+        $chambre = Chambre::findOrFail($id);
+         
+         $chambre->type  = $request['type'];
+         $chambre->prix  = $request['prix'];
+         $chambre->options  = $request['options'];
+
+        $chambre->update();
         return $chambre;
     }
 

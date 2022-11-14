@@ -43,9 +43,9 @@ class RiadController extends Controller
         ]);*/
         $riads = $request->all();
         $riads['slug'] = Str::slug($request->nom . ' ' . $request->id, '-');
-        if ($request->hasFile('image')) {
+        /*if ($request->hasFile('image')) {
             $riads['image'] = $request->image->store('images/riads', 'public');
-        }
+        }*/
         $listriads = Riad::create($riads);
         /* multiple images code (Image Table)
         foreach ($request->file('images') as $mediaFiles) {
@@ -72,9 +72,15 @@ class RiadController extends Controller
        // return Riad::whereSlug($slug)->with('user','ville','images','commentaires.user','chambres.type_chambres')->first();
         return Riad::whereSlug($slug)->with('user','hebergement_service.service', 'ville', 'images', 'commentaires.user', 'chambres.type_chambres')->first();
     }
+    
+    public function findByUserId($user_id)
+    {
+        return Riad::where('user_id',$user_id)->with('user','hebergement_service.service', 'ville', 'images', 'commentaires.user', 'chambres.type_chambres')->first();
+    }
+    
     public function id($id)
     {
-        return Riad::with('ville','images','commentaires','chambres.type_chambres')->find($id);
+        return Riad::with('ville','images','commentaires','chambres.type_chambres','hebergement_service.service')->find($id);
     }
 
     /**
@@ -86,9 +92,9 @@ class RiadController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
+        /*$request->validate([
             'image' => 'mimes:jpg,jpeg,png|max:2000'
-        ]);
+        ]);*/
         $riads = Riad::findOrFail($id);
         $modifierRiad = $request->all();
         if ($request->hasFile('image')) {

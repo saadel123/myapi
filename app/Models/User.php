@@ -47,7 +47,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(Gastronomie::class, 'user_id');
     }
-    public function favorites()
+      public function favorites()
     {
         return $this->hasMany(UserFavorite::class, 'user_id');
     }
@@ -67,6 +67,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'type_service',
+        'password',
     ];
 
     /**
@@ -75,7 +77,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
+        
         'remember_token',
     ];
 

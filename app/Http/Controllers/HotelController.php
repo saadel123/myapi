@@ -70,7 +70,11 @@ class HotelController extends Controller
      */
     public function show($slug)
     {
-        return Hotel::whereSlug($slug)->with('user','hotel_service.service', 'ville', 'images', 'commentaires.user', 'chambres.type_chambres')->get();
+        return Hotel::whereSlug($slug)->with('user','hotel_service.service', 'ville', 'images', 'commentaires.user', 'chambres.type_chambres')->first();
+    }
+     public function findByUserId($user_id)
+    {
+        return Hotel::where('user_id',$user_id)->with('user','hotel_service.service', 'ville', 'images', 'commentaires.user', 'chambres.type_chambres')->first();
     }
 
     public function id($id)
@@ -81,7 +85,7 @@ class HotelController extends Controller
         //     ->where('hotels.id', '=', $id)
         //     ->get();
         //nested relationships
-        $hotels = Hotel::with('ville', 'images', 'commentaires', 'chambres.type_chambres')->find($id);
+        $hotels = Hotel::with('ville', 'images', 'commentaires', 'chambres.type_chambres','hotel_service.service')->find($id);
         return $hotels;
     }
 
@@ -94,9 +98,9 @@ class HotelController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
+       /* $request->validate([
             'image' => 'mimes:jpg,jpeg,png|max:2000'
-        ]);
+        ]);*/
         $hotels = Hotel::findOrFail($id);
         $modifierHotel = $request->all();
         if ($request->hasFile('image')) {
@@ -130,7 +134,7 @@ class HotelController extends Controller
         if (count($hotels)) {
             return Response()->json($hotels);
         } else {
-            return response()->json(['Result' => 'No Data not found'], 404);
+            return response()->json(['Result' => 'Data not found'], 404);
         }
     }
 }

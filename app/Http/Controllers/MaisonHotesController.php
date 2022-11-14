@@ -61,6 +61,12 @@ class MaisonHotesController extends Controller
     {
         return MaisonHotes::whereSlug($slug)->with('user','ville','hebergement_service.service','images','commentaires.user','chambres.type_chambres')->first();
     }
+    
+    public function findByUserId($user_id)
+    {
+        return MaisonHotes::where('user_id',$user_id)->with('user','hebergement_service.service', 'ville', 'images', 'commentaires.user', 'chambres.type_chambres')->first();
+    }
+    
 
     /**
      * Update the specified resource in storage.
@@ -71,9 +77,9 @@ class MaisonHotesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
+       /* $request->validate([
             'image' => 'mimes:jpg,jpeg,png|max:2000'
-        ]);
+        ]);*/
         $MaisonHotess = MaisonHotes::findOrFail($id);
         $modifierMaisons = $request->all();
         if ($request->hasFile('image')) {
@@ -82,7 +88,10 @@ class MaisonHotesController extends Controller
         $MaisonHotess->update($modifierMaisons);
         return $MaisonHotess;
     }
-
+     public function id($id)
+    {
+        return MaisonHotes::with('ville','images','commentaires','chambres.type_chambres','hebergement_service.service')->find($id);
+    }
     /**
      * Remove the specified resource from storage.
      *

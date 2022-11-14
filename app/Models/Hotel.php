@@ -24,11 +24,13 @@ class Hotel extends Model
         'facebook',
         'instagram',
         'tiktok',
+        'whatsapp',
         'nbr_etoiles',
+        'image',
         'nb_visite',
-        'whatsapp' ,
         'prix_min',
-        'prix_max'
+        'prix_max',
+        'accepter_regles'
     ];
     public function user()
     {

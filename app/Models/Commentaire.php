@@ -15,10 +15,10 @@ class Commentaire extends Model
         'id_hotel',
         'id_riad',
         'id_maison_hote',
+        'parent_id',
         'id_restaurant',
         'id_activite',
         'id_guide',
-        'parent_id'
     ];
     public function hotel()
     {
@@ -39,6 +39,14 @@ class Commentaire extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+    public function guide()
+    {
+        return $this->belongsTo(GuidesTouristique::class, 'id_guide');
+    }
+    public function activite()
+    {
+        return $this->belongsTo(Activite::class, 'id_activite');
     }
 }
 

@@ -32,11 +32,13 @@ class UserController extends Controller
             'mot_de_passe_actuel' => ['required'],
             'nouveau_mot_de_passe' => ['required'],
             'confirmation_de_mot_de_passe' => ['required', 'same:nouveau_mot_de_passe'],
-        ]);
+        ], [
+        'confirmation_de_mot_de_passe.same' => 'Les champs "Nouveau mot de passe" et "Confirmation du nouveau mot de passe" doivent être identiques'
+    ]);
         $user = User::findOrFail($id);
         $password = $request->mot_de_passe_actuel;
         if (!Hash::check($password, $user->password)) {
-            return response(['message' => 'Le mot de passe ne corrrespondent pas.'], 401);
+            return response(['message' => 'Le mot de passe ne correspond pas.'], 401);
         } else {
             $user->password = Hash::make($request->nouveau_mot_de_passe);
             $user->save();
@@ -52,7 +54,7 @@ class UserController extends Controller
      */
     public function show($id)
     {
-        return User::whereId($id)->with('favorites.hotels')->get();
+        return User::findOrfail($id);
     }
 
     /**
@@ -76,6 +78,7 @@ class UserController extends Controller
             $user->nom = $request->nom;
             $user->prenom = $request->prenom;
             $user->name = $request->name;
+              $user->password = Hash::make($request->password);
         }
 
 

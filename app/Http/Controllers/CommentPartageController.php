@@ -26,7 +26,7 @@ class CommentPartageController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'commentaire' => 'required|min:5'
+            'commentaire' => 'required'
         ]);
         return CommentPartage::create($request->all());
     }
@@ -40,6 +40,17 @@ class CommentPartageController extends Controller
     public function show($id)
     {
         //
+    }
+
+     /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getCommentsByUserId($user_id)
+    {
+       return CommentPartage::where('user_id','=',$user_id)->with('user');
     }
 
     /**

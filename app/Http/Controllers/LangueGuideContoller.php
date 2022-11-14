@@ -19,21 +19,22 @@ class LangueGuideContoller extends Controller
     }
 
     public function storeArray(Request $request)
-    {
+    {   
         $id_guide = $request->id_guide;
-        $array = json_decode($request->languesguide, true);
-        // $id_type_chambre = '';
-        foreach ($array as $languesguide) {
-
-            $objMenu = LangueGuide::create([
-                'id_langue' => $languesguide['id_langue'],
-                'id_activite' => $id_guide,
-            ]);
-        }
-
+         if(isset($id_guide))
+            LangueGuide::where('id_guide',$id_guide)->delete();
+        
+        $langues = $request->languesguide;
+        $languesArray = [];
+        foreach($langues as $langue){
+                $objLangue = LangueGuide::create([
+                    'id_langue' => $langue,
+                    'id_guide' => $id_guide,
+                ]);
+           array_push($languesArray,$objLangue);
+         }
         $respone = [
-            'Message' => 'Success',
-            'Array' => $array
+            'langues' => $languesArray,
         ];
         return response($respone, 201);
     }

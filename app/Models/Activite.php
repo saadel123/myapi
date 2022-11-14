@@ -24,13 +24,13 @@ class Activite extends Model
         'facebook',
         'instagram',
         'tiktok',
+        'whatsapp',
         'nbr_etoiles',
-        'whatsapp' ,
         'image',
         'nb_visite',
         'prix_min',
         'prix_max',
-
+        'accepter_regles'
     ];
     public function user()
     {
@@ -46,7 +46,7 @@ class Activite extends Model
     }
     public function commentaires()
     {
-        return $this->hasMany(CommentPartage::class, 'id_activite');
+        return $this->hasMany(Commentaire::class, 'id_activite');
     }
     public function type_activite()
     {

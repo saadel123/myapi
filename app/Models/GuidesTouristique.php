@@ -25,10 +25,11 @@ class GuidesTouristique extends Model
         'instagram',
         'tiktok',
         'nbr_etoiles',
+        'whatsapp',
         'nb_visite',
-        'whatsapp' ,
         'prix_min',
-        'prix_max'
+        'prix_max',
+        'accepter_regles'
     ];
     public function user()
     {
@@ -44,7 +45,7 @@ class GuidesTouristique extends Model
     }
     public function commentaires()
     {
-        return $this->hasMany(CommentPartage::class, 'id_guide');
+        return $this->hasMany(Commentaire::class, 'id_guide');
     }
     public function langue_guides()
     {

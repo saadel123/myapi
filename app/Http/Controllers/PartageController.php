@@ -48,7 +48,7 @@ class PartageController extends Controller
     public function mesPartages($id)
     {
         if ($id) {
-            $partages = Partage::whereUserId($id)->get();
+            $partages = Partage::whereUserId($id)->with('user','commentpartage.user')->get();
             return response()->json(['partages' => $partages], 200);
         } else {
             return response()->json(['message' => 'User not found'], 404);
@@ -63,7 +63,7 @@ class PartageController extends Controller
      */
     public function show($slug)
     {
-        return Partage::whereSlug($slug)->with('commentpartage.user')->first();
+        return Partage::whereSlug($slug)->with('commentpartage.user','user')->first();
     }
 
     /**

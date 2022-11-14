@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class ActiviteImage extends Model
 {
+    use HasFactory;
     protected $fillable = [
         'image',
         'libelle',
@@ -15,7 +16,6 @@ class ActiviteImage extends Model
         'id_guide',
         'id_lieux',
     ];
-    use HasFactory;
 
     public function guide()
     {

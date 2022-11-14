@@ -20,6 +20,7 @@ class TypeActiviteController extends Controller
     public function storeArray(Request $request)
     {
         $id_activite = $request->id_activite;
+        $id_guide = $request->id_guide;
         $array = json_decode($request->typeActivites, true);
         // $id_type_chambre = '';
         foreach ($array as $typeactvites) {
@@ -27,8 +28,9 @@ class TypeActiviteController extends Controller
             $objMenu = TypeActivite::create([
                 'activite' => $typeactvites['activite'],
                 'duree' => $typeactvites['duree'],
-                'prix_actv' => $typeactvites['prix_actv'],
+                'prix_actv' => $typeactvites['prix'],
                 'id_activite' => $id_activite,
+                'id_guide' => $id_guide,
             ]);
         }
 

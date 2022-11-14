@@ -23,10 +23,12 @@ class Riad extends Model
         'facebook' ,
         'instagram' ,
         'tiktok' ,
-        'nb_visite',
         'whatsapp' ,
+        'nb_visite',
         'prix_min',
-        'prix_max'
+        'prix_max',
+        'accepter_regles'
+      
     ];
     public function user(){
         return $this->belongsTo(User::class,'user_id');

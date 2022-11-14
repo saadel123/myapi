@@ -24,9 +24,10 @@ class MaisonHotes extends Model
         'instagram' ,
         'tiktok' ,
         'nb_visite',
-        'whatsapp' ,
+        'whatsapp',
         'prix_min',
-        'prix_max'
+        'prix_max',
+        'accepter_regles'
     ];
     public function user(){
         return $this->belongsTo(User::class,'user_id');

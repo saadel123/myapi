@@ -21,6 +21,10 @@ class Partage extends Model
     {
         return $this->hasMany(CommentPartage::class, 'id_partage');
     }
+     public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 
 }
 

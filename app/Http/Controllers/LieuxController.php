@@ -32,13 +32,6 @@ class LieuxController extends Controller
         //     'description' => 'required|min:10|max:30000',
         //     'image' => 'required|mimes:jpg,jpeg,png|max:2000',
         // ]);
-        //     [
-        //     'titre' => $request->titre,
-        //     'slug' =>  Str::slug($request->titre),
-        //     'description' => $request->description,
-        // ]);
-        // 'image' => $request->image->store('images/lieux', 'public'),
-
         $data = $request->all();
         $data['slug'] = Str::slug($request->titre);
         if ($request->hasFile('image')) {
@@ -68,7 +61,7 @@ class LieuxController extends Controller
      */
     public function show($slug)
     {
-        return Lieux::whereSlug($slug)->with('user', 'commentaires.user')->first();
+        return Lieux::whereSlug($slug)->with('user','commentaires.user')->first();
     }
 
     /**

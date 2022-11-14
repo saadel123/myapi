@@ -27,7 +27,7 @@ class CommentaireController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'commentaire' => 'required|min:5'
+            'commentaire' => 'required'
         ]);
         return Commentaire::create($request->all());
     }
@@ -38,10 +38,46 @@ class CommentaireController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+      public function show($id)
     {
         return Commentaire::whereId($id)->with('user')->first();
 
+    }
+    
+       /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getCommentairesByHotel($hotel_id)
+    {
+       return Commentaire::where('id_hotel','=',$hotel_id)->with('user')->get();
+    }
+    
+    public function getCommentairesByRiad($riad_id)
+    {
+       return Commentaire::where('id_riad','=',$riad_id)->with('user')->get();
+    }
+    
+    public function getCommentairesByRestaurant($restaurant_id)
+    {
+       return Commentaire::where('id_restaurant','=',$restaurant_id)->with('user')->get();
+    }
+    
+    public function getCommentairesByMaison($maison_id)
+    {
+       return Commentaire::where('id_maison_hote','=',$maison_id)->with('user')->get();
+    }
+    
+    public function getCommentairesByActivite($activite_id)
+    {
+       return Commentaire::where('id_activite','=',$activite_id)->with('user')->get();
+    }
+    
+    public function getCommentairesByGuide($guide_id)
+    {
+       return Commentaire::where('id_guide','=',$guide_id)->with('user')->get();
     }
 
     /**

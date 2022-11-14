@@ -24,11 +24,13 @@ class Restaurant extends Model
         'website',
         'facebook',
         'instagram',
-        'nb_visite',
         'tiktok',
-        'whatsapp' ,
+        'whatsapp',
+        'image',
+        'nb_visite',
         'prix_min',
-        'prix_max'
+        'prix_max',
+        'accepter_regles'
     ];
     public function user()
     {
@@ -43,11 +45,13 @@ class Restaurant extends Model
     {
         return $this->hasMany(LigneMenu::class, 'id_restaurant');
     }
+    /*
 
     public function catmenus()
     {
         return $this->hasMany(CatMenu::class, 'id_restaurant');
     }
+    */
     public function images()
     {
         return $this->hasMany(Image::class, 'id_restaurant');

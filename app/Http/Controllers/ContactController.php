@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\ReservezMail;
-use App\Models\Reservez;
+use App\Mail\ContactMail;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
-class ReservezController extends Controller
+class ContactController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,7 @@ class ReservezController extends Controller
      */
     public function index()
     {
-        return Reservez::all();
+        
     }
 
     /**
@@ -27,18 +27,35 @@ class ReservezController extends Controller
      */
     public function store(Request $request)
     {
+        /*
         $this->validate($request, [
             'username' => 'required',
             'email' => 'required|min:10|max:3000',
             'subject' => 'required|min:10|max:3000',
             'message' => 'required',
         ]);
-        $reservez = $request->all();
-        $owner_email = $request->owner_email;
-        if (!empty($owner_email)) {
-            Mail::to($owner_email)->send(new ReservezMail($reservez));
-        }
-        return Reservez::create($reservez);
+        */
+        $contact = $request->all();
+
+        Mail::to('contact@msafar.ma')->send(new ContactMail($contact));
+        $msg = '';
+        $array = [];
+        if( count(Mail::failures()) > 0 ) {
+               $msg =  "There was one or more failures. They were: <br />";
+               foreach(Mail::failures() as $email_address) {
+                  array_push( $array ,$email_address);
+                }
+
+            } else {
+                $msg = "No errors, all sent successfully!";
+            }
+        
+        $respone = [
+            'Message' => $msg ,
+            'array' => $array
+            
+        ];
+        return response($respone, 201);
 
         // $reservez = Reservez::create([
         //     'username' => $request->username,
@@ -59,42 +76,6 @@ class ReservezController extends Controller
     {
         //
     }
-    
-      /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function showByHotel($id)
-    {
-        return Reservez::where('id_hotel','=',$id)->get();
-    }
-    
-     public function showByRiad($id)
-    {
-        Reservez::where('id_riad','=',$id)->get();
-    }
-    
-     public function showByMaison($id)
-    {
-        Reservez::where('id_maison_hote','=',$id)->get();
-    }
-    
-     public function showByrestaurant($id)
-    {
-        Reservez::where('id_restaurant','=',$id)->get();
-    }
-    
-     public function showByActivite($id)
-    {
-        Reservez::where('id_activite','=',$id)->get();
-    }
-    
-     public function showByGuide($id)
-    {
-        Reservez::where('id_guide','=',$id)->get();
-    }
 
     /**
      * Update the specified resource in storage.
@@ -105,15 +86,7 @@ class ReservezController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, [
-            'username' => 'required',
-            'email' => 'required|min:10|max:3000',
-            'subject' => 'required|min:10|max:3000',
-            'message' => 'required',
-        ]);
-        $commentaire = Reservez::findOrFail($id);
-        $commentaire->update($request->all());
-        return $commentaire;
+       
     }
 
     /**

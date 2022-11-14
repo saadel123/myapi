@@ -40,10 +40,6 @@ class LangueController extends Controller
         //
     }
 
-    public function storeArray(){
-
-    }
-
     /**
      * Update the specified resource in storage.
      *

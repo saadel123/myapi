@@ -15,7 +15,7 @@ class ActiviteController extends Controller
      */
     public function index()
     {
-        return Activite::orderBy('created_at', 'DESC')->get();
+        return Activite::with('images')->orderBy('created_at', 'DESC')->get();
     }
 
     /**
@@ -26,14 +26,14 @@ class ActiviteController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
+       /* $this->validate($request, [
             'nom' => 'required',
             'description' => 'required|min:10|max:30000',
             //'tel' => 'required',
             'adresse' => 'required',
             'image' => 'required|mimes:jpg,jpeg,png|max:2000',
             //'email' => 'required|unique:hotels',
-        ]);
+        ]);*/
         $activites = $request->all();
         if ($request->hasFile('image')) {
             $activites['image'] = $request->image->store('images/activites', 'public');
@@ -53,6 +53,11 @@ class ActiviteController extends Controller
     {
         return Activite::whereSlug($slug)->with('user','type_activite','images','commentaires.user')->first();
     }
+    
+    public function findByUserId($user_id)
+    {
+        return Activite::where('user_id',$user_id)->with('user','type_activite','images','commentaires.user')->first();
+    }
 
     /**
      * Update the specified resource in storage.
@@ -64,6 +69,9 @@ class ActiviteController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $activite = Activite::findOrFail($id);
+        $activite->update($request->all());
+        return $activite;
     }
 
     /**

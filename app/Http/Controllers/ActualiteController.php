@@ -31,14 +31,16 @@ class ActualiteController extends Controller
         //     'description' => 'required|min:10|max:30000',
         //     'image' => 'required|mimes:jpg,jpeg,png|max:2000',
         // ]);
-        $actualite = Actualite::create([
-            'titre' => $request->titre,
-            'slug' =>  Str::slug($request->titre),
-            'description' => $request->description,
-            'image' => $request->image->store('images/actualites', 'public'),
-        ]);
+         $actualite = $request->all();
+        if ($request->hasFile('image')) {
+            $actualite['image'] = $request->image->store('images/guides-touristique', 'public');
+        }
+        $actualite['slug'] = Str::slug($request->titre);
+
+        $objActualite = Actualite::create($actualite);
+        
         $respone = [
-            'actualite' => $actualite,
+            'actualite' => $objActualite,
         ];
         return response($respone, 201);
 
@@ -71,6 +73,7 @@ class ActualiteController extends Controller
      */
     public function update(Request $request, $id)
     {
+        /*
         // $this->validate($request, [
         //     'nom' => 'required',
         //     'description' => 'required|min:10|max:30000',
@@ -90,6 +93,11 @@ class ActualiteController extends Controller
             'actualite' => $actualite,
         ];
         return response($respone, 201);
+        */
+        
+        $actualite = Actualite::findOrFail($id);
+        $actualite->update($request->all());
+        return $actualite;
     }
 
     /**

@@ -36,7 +36,7 @@ class ActiviteImagesCotroller extends Controller
             $path = $mediaFiles->store('images/guides-touristique', 'public');
             $name = $mediaFiles->getClientOriginalName();
             $save = new ActiviteImage();
-            $save->libelle = $name;
+            //$save->libelle = $name;
             $save->image = $path;
             $save->id_activite = $request->id_activite;
             $save->id_guide = $request->id_guide;
@@ -79,5 +79,6 @@ class ActiviteImagesCotroller extends Controller
     public function destroy($id)
     {
         //
+        return ActiviteImage::destroy($id);
     }
 }
