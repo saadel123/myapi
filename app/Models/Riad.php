@@ -28,7 +28,7 @@ class Riad extends Model
         'prix_min',
         'prix_max',
         'accepter_regles'
-      
+
     ];
     public function user(){
         return $this->belongsTo(User::class,'user_id');
@@ -58,5 +58,9 @@ class Riad extends Model
     public function hebergement_service()
     {
         return $this->hasMany(HebergementService::class, 'id_riad');
+    }
+    public function user_favorites()
+    {
+        return $this->hasMany(UserFavorite::class, 'id_riad')->select('id', 'id_riad','user_id');
     }
 }

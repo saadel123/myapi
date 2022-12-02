@@ -61,7 +61,18 @@ class LieuxController extends Controller
      */
     public function show($slug)
     {
-        return Lieux::whereSlug($slug)->with('user','commentaires.user')->first();
+        return Lieux::whereSlug($slug)->with('user','commentaires.user','images')->first();
+    }
+    
+      /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function id($id)
+    {
+        return Lieux::with('images')->findOrfail($id);
     }
 
     /**

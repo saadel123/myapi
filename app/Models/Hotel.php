@@ -34,24 +34,24 @@ class Hotel extends Model
     ];
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class, 'user_id')->select('id','email');
     }
     public function ville()
     {
-        return $this->belongsTo(Ville::class, 'ville_id');
+        return $this->belongsTo(Ville::class, 'ville_id')->select('id','ville');
     }
     public function images()
     {
-        return $this->hasMany(Image::class, 'id_hotel');
+        return $this->hasMany(Image::class, 'id_hotel')->select('id','image','id_hotel','created_at');
     }
     public function chambres()
     {
-        return $this->hasMany(Chambre::class, 'id_hotel');
+        return $this->hasMany(Chambre::class, 'id_hotel')->select('id','options','prix','nbr_personnes','id_type_chambre','type','id_hotel','created_at');
     }
 
     public function commentaires()
     {
-        return $this->hasMany(Commentaire::class, 'id_hotel');
+        return $this->hasMany(Commentaire::class, 'id_hotel')->select('id','commentaire','user_id','id_hotel','created_at');
     }
     // public function type_chambres()
     // {
@@ -68,10 +68,10 @@ class Hotel extends Model
     }
     public function hotel_service()
     {
-        return $this->hasMany(HebergementService::class, 'id_hotel');
+        return $this->hasMany(HebergementService::class, 'id_hotel')->select('id','id_hotel','id_service','created_at');
     }
-    public function user_favorite()
+    public function user_favorites()
     {
-        return $this->hasMany(UserFavorite::class, 'id_hotel');
+        return $this->hasMany(UserFavorite::class, 'id_hotel')->select('id', 'id_hotel','user_id');
     }
 }

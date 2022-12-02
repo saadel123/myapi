@@ -63,6 +63,17 @@ class ActualiteController extends Controller
     {
         return Actualite::whereSlug($slug)->first();
     }
+    
+      /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function id($id)
+    {
+        return Actualite::findOrFail($id);
+    }
 
     /**
      * Update the specified resource in storage.

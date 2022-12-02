@@ -54,6 +54,17 @@ class ActiviteController extends Controller
         return Activite::whereSlug($slug)->with('user','type_activite','images','commentaires.user')->first();
     }
     
+        /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function id($id)
+    {
+        return Activite::with('user','type_activite','images','commentaires.user')->find($id);
+    }
+    
     public function findByUserId($user_id)
     {
         return Activite::where('user_id',$user_id)->with('user','type_activite','images','commentaires.user')->first();
@@ -82,6 +93,6 @@ class ActiviteController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return Activite::destroy($id);
     }
 }

@@ -70,14 +70,14 @@ class RiadController extends Controller
     public function show($slug)
     {
        // return Riad::whereSlug($slug)->with('user','ville','images','commentaires.user','chambres.type_chambres')->first();
-        return Riad::whereSlug($slug)->with('user','hebergement_service.service', 'ville', 'images', 'commentaires.user', 'chambres.type_chambres')->first();
+        return Riad::whereSlug($slug)->with('user','hebergement_service.service', 'ville', 'images', 'commentaires.user', 'chambres.type_chambres','user_favorites')->first();
     }
-    
+
     public function findByUserId($user_id)
     {
         return Riad::where('user_id',$user_id)->with('user','hebergement_service.service', 'ville', 'images', 'commentaires.user', 'chambres.type_chambres')->first();
     }
-    
+
     public function id($id)
     {
         return Riad::with('ville','images','commentaires','chambres.type_chambres','hebergement_service.service')->find($id);
