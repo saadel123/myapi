@@ -58,12 +58,14 @@ class MenuController extends Controller
     {
         $idLigneMenu = 0;
         $LigneMenu =  LigneMenu::where([['id_restaurant', '=', $request->id_restaurant],['id_cat_menu', '=', $request->id_categorie]])->first();
+        $LineMenuReturn = $LigneMenu;
         if($LigneMenu == null){
         $objLigneMenu = LigneMenu::create([
                 'id_restaurant' => $request->id_restaurant,
                 'id_cat_menu' => $request->id_categorie,
             ]);
             $idLigneMenu = $objLigneMenu->id ;
+            $LineMenuReturn = $objLigneMenu;
         }else{
             $idLigneMenu = $LigneMenu->id ;
         }
@@ -74,7 +76,7 @@ class MenuController extends Controller
                 'id_ligne_menu' => $idLigneMenu,
             ]);
             
-        return ['linge_menu'=>$idLigneMenu,'menu'=>$objMenu,'request'=>$request];    
+        return ['linge_menu'=>$LineMenuReturn,'menu'=>$objMenu,'request'=>$request];    
     }
 
     /**

@@ -15,7 +15,10 @@ class Partage extends Model
         'description',
         'titre',
         'slug',
-        'image'
+        'image',
+        'seo_titre' ,
+        'seo_description' ,
+        'seo_keywords' 
     ];
     public function commentpartage()
     {

@@ -61,7 +61,18 @@ class LieuxController extends Controller
      */
     public function show($slug)
     {
-        return Lieux::whereSlug($slug)->with('user','commentaires.user')->first();
+        return Lieux::whereSlug($slug)->with('user','commentaires.user','images')->first();
+    }
+    
+      /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function id($id)
+    {
+        return Lieux::with('images')->findOrfail($id);
     }
 
     /**
@@ -73,10 +84,14 @@ class LieuxController extends Controller
      */
     public function update(Request $request, $id)
     {
+        
         $lieux = Lieux::findOrFail($id);
         $lieux->titre =  $request->titre;
         $lieux->user_id =  $request->user_id;
         $lieux->description =  $request->description;
+        $lieux->seo_titre =  $request->seo_titre;
+         $lieux->seo_keywords =  $request->seo_keywords;
+          $lieux->seo_description =  $request->seo_description;
         if ($request->hasFile('image')) {
             $lieux->image = $request->image->store('images/lieux', 'public');
         }
@@ -85,6 +100,22 @@ class LieuxController extends Controller
             'lieux' => $lieux,
         ];
         return response($respone, 201);
+       
+        /*
+         $lieux = Lieux::findOrFail($id);
+          $updatePartage = $request->all();
+        if ($request->hasFile('image')) {
+            $lieux->image = $updatePartage["image"]->store('images/lieux', 'public');
+        }
+        $lieux->save($updatePartage);
+
+        $respone = [
+            'lieux' => $lieux,
+        ];
+        return response($respone, 201);
+         */ 
+       
+        
     }
 
     /**

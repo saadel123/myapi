@@ -6,11 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+
+    <meta name="google-site-verification" content="R7mcB049jsqeUhYd3MuVJIeyMezvf0JIN3lDjPjFZeE" />
 </head>
 
 <body>
-    <h3>Guides touristique</h3>
 
+    <h3>Guides touristique</h3>
     Route::get('/guides-touristique', [GuidesTouristiqueController::class, 'index']);<br>
     Route::post('/guides-touristique', [GuidesTouristiqueController::class, 'store']);<br>
     Route::get('/guides-touristique/{slug}', [GuidesTouristiqueController::class, 'show']);<br>
@@ -78,6 +80,7 @@
     Route::get('/actualites/search/{name}', [ActualiteController::class, 'search']);<br>
 
     <h3>Restaurant</h3>
+    Route::get('/restaurants', [RestaurantController::class, 'index']);<br>
     Route::post('/restaurants', [RestaurantController::class, 'store']);<br>
     Route::get('/restaurants/{slug}', [RestaurantController::class, 'show']);<br>
     Route::post('/restaurants/{id}', [RestaurantController::class, 'update']);<br>
@@ -90,10 +93,10 @@
     Route::post('/reservations/{id}', [ReservezController::class, 'update']);<br>
     Route::delete('/reservations/{id}', [ReservezController::class, 'destroy']);<br>
     <h3>Commentaires</h3>
-    Route::get('/commentaires', [CommentaireController::class, 'index']);<br>
-    Route::post('/commentaires', [CommentaireController::class, 'store']);<br>
-    Route::post('/commentaires/{id}', [CommentaireController::class, 'update']);<br>
-    Route::delete('/commentaires/{id}', [CommentaireController::class, 'destroy']);<br>
+    Route::get('/cmts', [CommentaireController::class, 'index']);<br>
+    Route::post('/cmts', [CommentaireController::class, 'store']);<br>
+    Route::post('/cmts/{id}', [CommentaireController::class, 'update']);<br>
+    Route::delete('/cmts/{id}', [CommentaireController::class, 'destroy']);<br>
     <h3>Hotels</h3>
     Route::get('/hotels', [HotelController::class, 'index']); <br>
     Route::post('/hotels', [HotelController::class, 'store']); <br>
@@ -135,6 +138,7 @@
         });
 
     </p>
+
 </body>
 
 </html>

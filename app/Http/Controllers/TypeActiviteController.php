@@ -49,7 +49,9 @@ class TypeActiviteController extends Controller
      */
     public function store(Request $request)
     {
-        TypeActivite::create($request->all());
+        $typeActivite = TypeActivite::create($request->all());
+        
+         return $typeActivite;
     }
 
     /**
@@ -75,6 +77,21 @@ class TypeActiviteController extends Controller
         $tchambre = TypeActivite::findOrFail($id);
         $tchambre->update($request->all());
         return $tchambre;
+    }
+    
+    
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response 
+     */
+    public function updateActivite(Request $request, $id)
+    {
+        $activite = TypeActivite::findOrFail($id);
+        $activite->update($request->all());
+        return $activite;
     }
 
     /**

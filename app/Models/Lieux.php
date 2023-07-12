@@ -15,7 +15,10 @@ class Lieux extends Model
         'titre',
         'slug',
         'description',
-        'image'
+        'image',
+        'seo_titre' ,
+        'seo_description' ,
+        'seo_keywords' 
     ];
     public function commentaires(){
         return $this->hasMany(CommentPartage::class,'id_lieux');

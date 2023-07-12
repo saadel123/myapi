@@ -38,13 +38,13 @@ class Commentaire extends Model
     }
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+         return $this->belongsTo(User::class, 'user_id')->select('id','nom','prenom','pseudo','pseudo','avatar');
     }
-    public function guide()
+      public function guide()
     {
         return $this->belongsTo(GuidesTouristique::class, 'id_guide');
     }
-    public function activite()
+     public function activite()
     {
         return $this->belongsTo(Activite::class, 'id_activite');
     }

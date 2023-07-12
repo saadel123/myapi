@@ -35,6 +35,9 @@ class PartageController extends Controller
         $partage = Partage::create([
             'user_id' => $request->user_id,
             'titre' => $request->titre,
+            'seo_titre' => $request->seo_titre,
+            'seo_keywords' => $request->seo_keywords,
+            'seo_description' => $request->seo_description,
             'slug' =>  Str::slug($request->titre),
             'description' => $request->description,
             'image' => $request->image->store('images/partages', 'public'),
@@ -82,6 +85,9 @@ class PartageController extends Controller
         $partage = partage::findOrFail($id);
         $partage->titre =  $request->titre;
         $partage->description =  $request->description;
+        $partage->seo_titre =  $request->seo_titre;
+        $partage->seo_keywords =  $request->seo_keywords;
+        $partage->seo_description =  $request->seo_description;
         if ($request->hasFile('image')) {
             $partage->image = $request->image->store('images/partages', 'public');
         } else {

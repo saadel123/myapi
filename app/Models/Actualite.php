@@ -16,6 +16,8 @@ class Actualite extends Model
         'titre' ,
         'slug' ,
         'description' ,
-
+        'seo_titre' ,
+        'seo_description' ,
+        'seo_keywords' ,
     ];
 }

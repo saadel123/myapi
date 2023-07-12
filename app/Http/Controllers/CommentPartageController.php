@@ -50,7 +50,7 @@ class CommentPartageController extends Controller
      */
     public function getCommentsByUserId($user_id)
     {
-       return CommentPartage::where('user_id','=',$user_id)->with('user');
+       return CommentPartage::where('user_id','=',$user_id)->with('user')->get();
     }
 
     /**

@@ -82,6 +82,7 @@ Route::post('/type-activites', [TypeActiviteController::class, 'store']);
 Route::get('/type-activites', [TypeActiviteController::class, 'index']);
 Route::get('/type-activites/{id}', [TypeActiviteController::class, 'show']);
 Route::put('/type-activites/{id}', [TypeActiviteController::class, 'update']);
+Route::post('/type-activites/update/{id}', [TypeActiviteController::class, 'updateActivite']);
 Route::delete('/type-activites/{id}', [TypeActiviteController::class, 'destroy']);
 Route::post('/activite-liste', [TypeActiviteController::class, 'storeArray']);
 /******EndTypeActivite******* */
@@ -116,6 +117,7 @@ Route::delete('/post-images/{id}', [ActiviteImagesCotroller::class, 'destroy']);
 Route::get('/guides-touristique', [GuidesTouristiqueController::class, 'index']);
 Route::post('/guides-touristique', [GuidesTouristiqueController::class, 'store']);
 Route::get('/guides-touristique/{slug}', [GuidesTouristiqueController::class, 'show']);
+Route::get('/guides-touristique/id/{id}', [GuidesTouristiqueController::class, 'id']);
 Route::post('/guides-touristique/{id}', [GuidesTouristiqueController::class, 'update']);
 Route::delete('/guides-touristique/{id}', [GuidesTouristiqueController::class, 'destroy']);
 Route::get('/guides-touristique/search/{name}', [GuidesTouristiqueController::class, 'search']);
@@ -125,6 +127,7 @@ Route::get('/guides-touristique/search/{name}', [GuidesTouristiqueController::cl
 Route::get('/activites', [ActiviteController::class, 'index']);
 Route::post('/activites', [ActiviteController::class, 'store']);
 Route::get('/activites/{slug}', [ActiviteController::class, 'show']);
+Route::get('/activites/id/{id}', [ActiviteController::class, 'id']);
 Route::post('/activites/{id}', [ActiviteController::class, 'update']);
 Route::delete('/activites/{id}', [ActiviteController::class, 'destroy']);
 Route::get('/activites/search/{name}', [ActiviteController::class, 'search']);
@@ -249,12 +252,6 @@ Route::get('/commentaires/maison-hote/{id}', [CommentaireController::class, 'get
 Route::get('/commentaires/activite/{id}', [CommentaireController::class, 'getCommentairesByActivite']);
 Route::get('/commentaires/guide/{id}', [CommentaireController::class, 'getCommentairesByGuide']);
 
-Route::get('/commentaires_partage', [CommentPartageController::class, 'index']);
-Route::get('/commentaires_partage/{id}', [CommentPartageController::class, 'show']);
-Route::post('/commentaires_partage', [CommentPartageController::class, 'store']);
-Route::post('/commentaires_partage/{id}', [CommentPartageController::class, 'update']);
-Route::delete('/commentaires_partage/{id}', [CommentPartageController::class, 'destroy']);
-
 Route::post('/images', [ImageController::class, 'store']);
 Route::delete('/images/{id}', [ImageController::class, 'destroy']);
 
@@ -305,9 +302,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/registerpro', [AuthController::class, 'registerPro']);
+Route::post('/admin/register', [AuthController::class, 'registerForAdmin']);
 Route::post('/login', [AuthController::class, 'login']);
+Route::post('/login-admin', [AuthController::class, 'login_admin']);
+Route::post('/verifier', [AuthController::class, 'verifier']);
 
-
+Route::get('/users/professionnels', [UserController::class, 'getProfessionnelsUsers']);
+Route::get('/users/voyageurs', [UserController::class, 'getVoyageursUsers']);
+Route::delete('/users/{id}', [UserController::class, 'destroy']);
+Route::post('/users/update/{id}', [UserController::class, 'updateUser']);
+Route::get('/dashboard', [AuthController::class, 'dashboard']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/partages/user/{id}', [PartageController::class, 'mesPartages']);
@@ -315,6 +319,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/updatepassword/{id}', [UserController::class, 'updatePassword']);
     Route::get('/users', [UserController::class, 'index']);
     Route::get('/users/{id}', [UserController::class, 'show']);
+    
 });
 
 

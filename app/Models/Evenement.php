@@ -15,7 +15,10 @@ class Evenement extends Model
         'titre' ,
         'slug' ,
         'description' ,
-        'image' 
+        'image',
+        'seo_titre' ,
+        'seo_description' ,
+        'seo_keywords' 
     ];
 }
  

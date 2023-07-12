@@ -14,7 +14,7 @@ class VilleController extends Controller
      */
     public function index()
     {
-        return Ville::all();
+        return Ville::orderby('ville')->get();
     }
 
     /**

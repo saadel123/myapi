@@ -54,6 +54,17 @@ class GuidesTouristiqueController extends Controller
         return GuidesTouristique::whereSlug($slug)->with('user','langue_guides.langue','type_activite','images','commentaires.user')->first();
     }
     
+      /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function id($id)
+    {
+        return GuidesTouristique::with('user','langue_guides.langue','type_activite','images','commentaires.user')->find($id);
+    }
+    
        public function findByUserId($user_id)
     {
         return GuidesTouristique::where('user_id',$user_id)->with('user','langue_guides.langue','type_activite','images','commentaires.user')->first();

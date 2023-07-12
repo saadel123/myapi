@@ -32,13 +32,20 @@ class EvenementController extends Controller
         //     'description' => 'required|min:10|max:30000',
         //     'image' => 'required|mimes:jpg,jpeg,png|max:2000',
         // ]);
-
+        $data = $request->all();
+        $data['slug'] = Str::slug($request->titre);
+        if ($request->hasFile('image')) {
+            $data['image'] = $request->image->store('images/evenements', 'public');
+        }
+        $evenement = Evenement::create($data);
+        /*
         $evenement = Evenement::create([
             'titre' => $request->titre,
             'slug' =>  Str::slug($request->titre),
             'description' => $request->description,
             'image' => $request->image->store('images/evenements', 'public'),
         ]);
+         */
         $respone = [
             'evenement' => $evenement,
         ];
@@ -70,13 +77,25 @@ class EvenementController extends Controller
         //     'description' => 'required|min:10|max:30000',
         //     'image' => 'required|mimes:jpg,jpeg,png|max:2000',
         // ]);
+         /*
+        $evenement = Evenement::findOrFail($id);
+        $updateEvenement = $request->all();
+        if ($request->hasFile('image')) {
+            $updateGastronomie["image"] = $request->image->store('images/evenements', 'public');
+        }
+        $evenement->update($updateEvenement);
+       */
         $evenement = Evenement::findOrFail($id);
         $evenement->titre =  $request->titre;
         $evenement->description =  $request->description;
+              $evenement->seo_titre =  $request->seo_titre;
+         $evenement->seo_keywords =  $request->seo_keywords;
+          $evenement->seo_description =  $request->seo_description;
         if ($request->hasFile('image')) {
             $evenement->image = $request->image->store('images/evenements', 'public');
         }
         $evenement->save();
+         
         $respone = [
             'evenement' => $evenement,
         ];
