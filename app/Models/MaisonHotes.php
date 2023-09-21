@@ -14,12 +14,17 @@ class MaisonHotes extends Model
         'nom' ,
         'slug' ,
         'description' ,
+        'nom_ar',
+        'description_ar',
         'tel' ,
         'ville_id' ,
         'adresse' ,
         'email' ,
         'prix' ,
         'website' ,
+        'display_home',
+        'display',
+        'url' ,
         'facebook' ,
         'instagram' ,
         'tiktok' ,
@@ -57,5 +62,9 @@ class MaisonHotes extends Model
     public function hebergement_service()
     {
         return $this->hasMany(HebergementService::class, 'id_maison_hote');
+    }
+    public function reservezs()
+    {
+        return $this->hasMany(Reservez::class, 'id_maison_hote');
     }
 }

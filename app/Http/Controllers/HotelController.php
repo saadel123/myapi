@@ -14,9 +14,13 @@ class HotelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function indexAdmin()
     {
         return Hotel::with('ville', 'images')->orderBy('created_at', 'DESC')->get();
+    }
+    public function index()
+    {
+        return Hotel::with('ville', 'images')->where('display',1)->orderBy('created_at', 'DESC')->get();
     }
 
     /**
@@ -70,11 +74,11 @@ class HotelController extends Controller
      */
     public function show($slug)
     {
-                return Hotel::whereSlug($slug)->with('user','hotel_service.service', 'ville', 'images', 'commentaires.user', 'chambres.type_chambres','user_favorites')->first();
+        return Hotel::whereSlug($slug)->with('user', 'hotel_service.service', 'ville', 'images', 'commentaires.user', 'chambres.type_chambres', 'user_favorites')->first();
     }
-     public function findByUserId($user_id)
+    public function findByUserId($user_id)
     {
-        return Hotel::where('user_id',$user_id)->with('user','hotel_service.service', 'ville', 'images', 'commentaires.user', 'chambres.type_chambres')->first();
+        return Hotel::where('user_id', $user_id)->with('user', 'hotel_service.service', 'ville', 'images', 'commentaires.user', 'chambres.type_chambres')->first();
     }
 
     public function id($id)
@@ -85,7 +89,7 @@ class HotelController extends Controller
         //     ->where('hotels.id', '=', $id)
         //     ->get();
         //nested relationships
-        $hotels = Hotel::with('ville', 'images', 'commentaires', 'chambres.type_chambres','hotel_service.service')->find($id);
+        $hotels = Hotel::with('ville', 'images', 'commentaires', 'chambres.type_chambres', 'hotel_service.service')->find($id);
         return $hotels;
     }
 
@@ -98,7 +102,7 @@ class HotelController extends Controller
      */
     public function update(Request $request, $id)
     {
-       /* $request->validate([
+        /* $request->validate([
             'image' => 'mimes:jpg,jpeg,png|max:2000'
         ]);*/
         $hotels = Hotel::findOrFail($id);

@@ -63,7 +63,7 @@ class LieuxController extends Controller
     {
         return Lieux::whereSlug($slug)->with('user','commentaires.user','images')->first();
     }
-    
+
       /**
      * Display the specified resource.
      *
@@ -84,11 +84,13 @@ class LieuxController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
         $lieux = Lieux::findOrFail($id);
         $lieux->titre =  $request->titre;
+        $lieux->titre_ar =  $request->titre_ar;
         $lieux->user_id =  $request->user_id;
         $lieux->description =  $request->description;
+        $lieux->description_ar =  $request->description_ar;
         $lieux->seo_titre =  $request->seo_titre;
          $lieux->seo_keywords =  $request->seo_keywords;
           $lieux->seo_description =  $request->seo_description;
@@ -100,7 +102,7 @@ class LieuxController extends Controller
             'lieux' => $lieux,
         ];
         return response($respone, 201);
-       
+
         /*
          $lieux = Lieux::findOrFail($id);
           $updatePartage = $request->all();
@@ -113,9 +115,9 @@ class LieuxController extends Controller
             'lieux' => $lieux,
         ];
         return response($respone, 201);
-         */ 
-       
-        
+         */
+
+
     }
 
     /**

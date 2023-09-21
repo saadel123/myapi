@@ -19,7 +19,7 @@ class UserController extends Controller
     {
         return User::all();
     }
-    
+
      /**
      * Display a listing of the resource.
      *
@@ -37,7 +37,7 @@ class UserController extends Controller
        ->orderBy('created_at', 'DESC')
        ->get(['users.*', 'hotels.id as hotels_id','riads.id as riads_id','maison_hotes.id as maison_hotes_id','restaurants.id as restaurants_id']);
     }
-    
+
       /**
      * Display a listing of the resource.
      *
@@ -47,7 +47,7 @@ class UserController extends Controller
     {
         //return User::where('role_id','2')->get();
         return User::whereRoleId('1')->orderBy('created_at', 'DESC')->get();
-      
+
     }
 
     /**
@@ -96,7 +96,7 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-       
+
          $user = User::findOrFail($id);
         if ($request->hasFile('avatar')) {
             $user->avatar = $request->file('avatar')->store('images/profil', 'public');
@@ -110,12 +110,12 @@ class UserController extends Controller
                 ]);
             }
             $request->validate([
-                'nouveau_mot_de_passe' => ['required'],
-                'confirmation_de_mot_de_passe' => ['required', 'same:nouveau_mot_de_passe'],
+                'nouveau_mot_de_passe' => [],
+                'confirmation_de_mot_de_passe' => [ 'same:nouveau_mot_de_passe'],
             ], [
                 'confirmation_de_mot_de_passe.same' => 'Les champs "Nouveau mot de passe" et "Confirmation du nouveau mot de passe" doivent être identiques'
             ]);
-    
+
                 $user->nom = $request->nom;
                 $user->prenom = $request->prenom;
                 $user->name = $request->name;
@@ -124,7 +124,7 @@ class UserController extends Controller
                 // $user->password = Hash::make($request->password);
                 // $user->save();
                 // return response()->json(['message' => 'Votre mot de passe a été mis à jour'], 200);
-          
+
         }
 
 
@@ -138,7 +138,7 @@ class UserController extends Controller
             'code' => 200
         ]);
     }
-    
+
      /**
      * Update the specified resource in storage.
      *
@@ -156,15 +156,15 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         if ($request->hasFile('avatar')) {
             $user->avatar = $request->file('avatar')->store('images/profil', 'public');
-        } 
-        
+        }
+
             $user->nom = $request->nom;
             $user->prenom = $request->prenom;
             $user->name = $request->name;
             $user->pseudo = $request->pseudo;
             $user->email = $request->email;
             $user->type_service = $request->type_service;
-            
+
             if($request->password){
                 $user->password = Hash::make($request->password);
             }
@@ -173,9 +173,9 @@ class UserController extends Controller
         // $name = '/images/' . uniqid() . '.' . $file->extension();
         // $file->storePubliclyAs('public', $name);
         // $user->avatar = $name;
-        
+
         $user->save();
-        
+
         return response()->json([
             'message' => 'user updated succesfully',
             'code' => 200

@@ -17,7 +17,8 @@ class Chambre extends Model
         'id_riad',
         'id_maison_hote',
         'id_type_chambre',
-        'type'
+        'type',
+        'id_apparthotels',
     ];
     public function hotel()
     {
@@ -34,5 +35,9 @@ class Chambre extends Model
     public function type_chambres()
     {
         return $this->belongsTo(Type_chambre::class,'id_type_chambre');
+    }
+    public function apparthotel()
+    {
+        return $this->belongsTo(Apparthotels::class, 'id_apparthotels');
     }
 }

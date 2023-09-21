@@ -55,6 +55,10 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Hotel::class, 'user_favorites')->withTimestamps();
     }
+    public function apparthotels()
+    {
+        return $this->hasMany(Apparthotels::class, 'user_id');
+    }
     /**
      * The attributes that are mass assignable.
      *
@@ -80,7 +84,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        
+
         'remember_token',
     ];
 

@@ -11,6 +11,8 @@ class Service extends Model
 
     protected $fillable = [
         'id_hotel',
+        'id_apparthotels',
+        // 'id_villa',
         'nom',
         'avatar',
     ];

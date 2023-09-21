@@ -9,9 +9,13 @@ use Illuminate\Support\Str;
 
 class MaisonHotesController extends Controller
 {
-    public function index()
+    public function indexAdmin()
     {
         return MaisonHotes::with('ville','images')->orderBy('created_at', 'DESC')->get();
+    }
+    public function index()
+    {
+        return MaisonHotes::with('ville','images')->where('display',1)->orderBy('created_at', 'DESC')->get();
     }
 
     /**
@@ -61,12 +65,12 @@ class MaisonHotesController extends Controller
     {
         return MaisonHotes::whereSlug($slug)->with('user','ville','hebergement_service.service','images','commentaires.user','chambres.type_chambres')->first();
     }
-    
+
     public function findByUserId($user_id)
     {
         return MaisonHotes::where('user_id',$user_id)->with('user','hebergement_service.service', 'ville', 'images', 'commentaires.user', 'chambres.type_chambres')->first();
     }
-    
+
 
     /**
      * Update the specified resource in storage.

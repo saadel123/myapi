@@ -38,7 +38,7 @@ class ActualiteController extends Controller
         $actualite['slug'] = Str::slug($request->titre);
 
         $objActualite = Actualite::create($actualite);
-        
+
         $respone = [
             'actualite' => $objActualite,
         ];
@@ -63,7 +63,7 @@ class ActualiteController extends Controller
     {
         return Actualite::whereSlug($slug)->first();
     }
-    
+
       /**
      * Display the specified resource.
      *
@@ -92,12 +92,14 @@ class ActualiteController extends Controller
         //     'image' => 'required|mimes:jpg,jpeg,png|max:2000',
         //     //'email' => 'required|unique:hotels',
         // ]);
- */
+        */
         $actualite = Actualite::findOrFail($id);
         $actualite->titre =  $request->titre;
         $actualite->description =  $request->description;
-            $actualite->seo_titre =  $request->seo_titre;
-         $actualite->seo_keywords =  $request->seo_keywords;
+        $actualite->titre_ar =  $request->titre_ar;
+        $actualite->description_ar =  $request->description_ar;
+        $actualite->seo_titre =  $request->seo_titre;
+        $actualite->seo_keywords =  $request->seo_keywords;
           $actualite->seo_description =  $request->seo_description;
         if ($request->hasFile('image')) {
             $actualite->image = $request->image->store('images/actualites', 'public');
@@ -107,7 +109,7 @@ class ActualiteController extends Controller
             'actualite' => $actualite,
         ];
         return response($respone, 201);
-       
+
           /*
         $actualite = Actualite::findOrFail($id);
         $actualite->update($request->all());

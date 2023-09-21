@@ -13,12 +13,14 @@ class Gastronomie extends Model
         'user_id',
         'ville_id',
         'titre',
+        'titre_ar',
         'slug',
         'description',
+        'description_ar',
         'image',
         'seo_titre' ,
         'seo_description' ,
-        'seo_keywords' 
+        'seo_keywords'
     ];
     public function commentaires(){
         return $this->hasMany(CommentPartage::class,'id_gastronomie');

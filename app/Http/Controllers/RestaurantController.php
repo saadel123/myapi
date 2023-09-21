@@ -13,9 +13,13 @@ class RestaurantController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function indexAdmin()
+    {
+        return Restaurant::with('ville', 'images')->orderBy('created_at', 'DESC')->get();
+    }
     public function index()
     {
-        return Restaurant::with('images')->orderBy('created_at', 'DESC')->get();
+        return Restaurant::with('ville', 'images')->where('display',1)->orderBy('created_at', 'DESC')->get();
     }
 
     /**
@@ -53,7 +57,7 @@ class RestaurantController extends Controller
     {
         return Restaurant::whereSlug($slug)->with('ligne_menus.menus','ligne_menus.categoriemenu','user','images','commentaires.user')->first();
     }
-    
+
      /**
      * Display the specified resource.
      *
@@ -64,7 +68,7 @@ class RestaurantController extends Controller
     {
         return Restaurant::with('ligne_menus.menus','ligne_menus.categoriemenu','user','images','commentaires.user')->find($id);
     }
-    
+
      public function findByUserId($user_id)
     {
         return Restaurant::where('user_id',$user_id)->with('ligne_menus.menus','ligne_menus.categoriemenu','user','images','commentaires.user')->first();

@@ -13,12 +13,13 @@ class Evenement extends Model
         'user_id' ,
         'ville_id' ,
         'titre' ,
+        'titre_ar' ,
         'slug' ,
         'description' ,
+        'description_ar',
         'image',
         'seo_titre' ,
         'seo_description' ,
-        'seo_keywords' 
+        'seo_keywords'
     ];
 }
- 

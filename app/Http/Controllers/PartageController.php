@@ -35,11 +35,13 @@ class PartageController extends Controller
         $partage = Partage::create([
             'user_id' => $request->user_id,
             'titre' => $request->titre,
+            'description' => $request->description,
+            'titre_ar' => $request->titre_ar,
+            'description_ar' => $request->description_ar,
             'seo_titre' => $request->seo_titre,
             'seo_keywords' => $request->seo_keywords,
             'seo_description' => $request->seo_description,
             'slug' =>  Str::slug($request->titre),
-            'description' => $request->description,
             'image' => $request->image->store('images/partages', 'public'),
         ]);
         $respone = [

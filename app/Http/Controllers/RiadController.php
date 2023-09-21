@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Models\MaisonHotes;
 use App\Models\Riad;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -14,10 +14,15 @@ class RiadController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function indexAdmin()
     {
         return Riad::with('ville', 'images')->orderBy('created_at', 'DESC')->get();
     }
+    public function index()
+    {
+        return Riad::with('ville', 'images')->where('display',1)->orderBy('created_at', 'DESC')->get();
+    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -28,7 +33,7 @@ class RiadController extends Controller
     public function store(Request $request)
     {
 
-    /*
+        /*
         if (!$request->hasFile('images')) {
             return response()->json(['In order to continue, you must choose at least one image'], 400);
         }
@@ -67,20 +72,29 @@ class RiadController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function show($slug)
     {
-       // return Riad::whereSlug($slug)->with('user','ville','images','commentaires.user','chambres.type_chambres')->first();
-        return Riad::whereSlug($slug)->with('user','hebergement_service.service', 'ville', 'images', 'commentaires.user', 'chambres.type_chambres')->first();
+        $maisonHotes = MaisonHotes::whereSlug($slug)->with('user', 'hebergement_service.service', 'ville', 'images', 'commentaires.user', 'chambres.type_chambres')->first();
+        $riad = Riad::whereSlug($slug)->with('user', 'hebergement_service.service', 'ville', 'images', 'commentaires.user', 'chambres.type_chambres')->first();
+
+        if ($maisonHotes) {
+            return response()->json($maisonHotes);
+        } elseif ($riad) {
+            return response()->json($riad);
+        } else {
+            return response()->json(null, 404);
+        }
     }
-    
+
     public function findByUserId($user_id)
     {
-        return Riad::where('user_id',$user_id)->with('user','hebergement_service.service', 'ville', 'images', 'commentaires.user', 'chambres.type_chambres')->first();
+        return Riad::where('user_id', $user_id)->with('user', 'hebergement_service.service', 'ville', 'images', 'commentaires.user', 'chambres.type_chambres')->first();
     }
-    
+
     public function id($id)
     {
-        return Riad::with('ville','images','commentaires','chambres.type_chambres','hebergement_service.service')->find($id);
+        return Riad::with('ville', 'images', 'commentaires', 'chambres.type_chambres', 'hebergement_service.service')->find($id);
     }
 
     /**

@@ -38,38 +38,42 @@ class HebergementServiceController extends Controller
 
     public function storeArray(Request $request)
     {
-        
+
         $services = $request->services;
         $id_hotel = $request->id_hotel;
         $id_riad = $request->id_riad;
+        $id_apparthotels = $request->id_apparthotels;
         $id_maison_hote = $request->id_maison_hote;
-        
-        if(isset($id_hotel))
-            HebergementService::where('id_hotel',$id_hotel)->delete();
-        if(isset($id_riad))
-            HebergementService::where('id_riad',$id_riad)->delete();
-        if(isset($id_maison_hote))
-            HebergementService::where('id_maison_hote',$id_maison_hote)->delete();
 
-        
+        if (isset($id_hotel))
+            HebergementService::where('id_hotel', $id_hotel)->delete();
+        if (isset($id_riad))
+            HebergementService::where('id_riad', $id_riad)->delete();
+        if (isset($id_maison_hote))
+            HebergementService::where('id_maison_hote', $id_maison_hote)->delete();
+        if (isset($id_apparthotels))
+            HebergementService::where('id_apparthotels', $id_apparthotels)->delete();
+
+
         $servicesArray = [];
-        foreach($services as $service){
-                $service = HebergementService::create([
-                    'id_hotel' => $id_hotel,
-                    'id_riad' => $id_riad,
-                    'id_maison_hote' => $id_maison_hote,
-                    'id_service' => $service,
-                ]);
-           array_push($servicesArray,$service);
-         }
+        foreach ($services as $service) {
+            $service = HebergementService::create([
+                'id_hotel' => $id_hotel,
+                'id_riad' => $id_riad,
+                'id_maison_hote' => $id_maison_hote,
+                'id_apparthotels' => $id_apparthotels,
+                'id_service' => $service,
+            ]);
+            array_push($servicesArray, $service);
+        }
         $respone = [
             'services' => $servicesArray,
         ];
         return response($respone, 201);
     }
-    
-    
-    
+
+
+
     /**
      * Display the specified resource.
      *

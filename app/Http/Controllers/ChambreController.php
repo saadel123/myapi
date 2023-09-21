@@ -33,9 +33,10 @@ class ChambreController extends Controller
             else
             $id_type_chambre = 3;
             */
-            
+
             $id_hotel=$request->id_hotel;
             $id_maison_hote = $request->id_maison_hote;
+            $id_apparthotels = $request->id_apparthotels;
             $id_riad = $request->id_riad;
 
              $objChambre = Chambre::create([
@@ -45,6 +46,7 @@ class ChambreController extends Controller
                     'id_hotel' => $id_hotel,
                     'id_riad' => $id_riad,
                     'id_maison_hote' => $id_maison_hote,
+                    'id_apparthotels' => $id_apparthotels,
              ]);
         return $objChambre;
     }
@@ -54,9 +56,10 @@ class ChambreController extends Controller
         $id_hotel=$request->id_hotel;
         $id_maison_hote = $request->id_maison_hote;
         $id_riad = $request->id_riad;
+        $id_apparthotels = $request->id_apparthotels;
         $array = json_decode($request->chambres, true);
         $id_type_chambre = '';
-        
+
         foreach ($array as $chambre) {
 
            /* if($chambre['type'] == 'Chambre individuelle')
@@ -73,6 +76,7 @@ class ChambreController extends Controller
                     'id_hotel' => $id_hotel,
                     'id_riad' => $id_riad,
                     'id_maison_hote' => $id_maison_hote,
+                    'id_apparthotels' => $id_apparthotels
                 ]);
 
         }
@@ -103,10 +107,10 @@ class ChambreController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)   
+    public function update(Request $request, $id)
     {
         $chambre = Chambre::findOrFail($id);
-         
+
          $chambre->type  = $request['type'];
          $chambre->prix  = $request['prix'];
          $chambre->options  = $request['options'];
@@ -114,7 +118,7 @@ class ChambreController extends Controller
         $chambre->update();
         return $chambre;
     }
-    
+
      /**
      * Update the specified resource in storage.
      *
@@ -122,10 +126,10 @@ class ChambreController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function updateChambre(Request $request, $id)   
+    public function updateChambre(Request $request, $id)
     {
         $chambre = Chambre::findOrFail($id);
-         
+
          $chambre->type  = $request['type'];
          $chambre->prix  = $request['prix'];
          $chambre->options  = $request['options'];

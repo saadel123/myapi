@@ -13,9 +13,13 @@ class ActiviteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function indexAdmin()
+    {
+        return Activite::with('ville', 'images')->orderBy('created_at', 'DESC')->get();
+    }
     public function index()
     {
-        return Activite::with('images')->orderBy('created_at', 'DESC')->get();
+        return Activite::with('ville', 'images')->where('display',1)->orderBy('created_at', 'DESC')->get();
     }
 
     /**
@@ -53,7 +57,7 @@ class ActiviteController extends Controller
     {
         return Activite::whereSlug($slug)->with('user','type_activite','images','commentaires.user')->first();
     }
-    
+
         /**
      * Display the specified resource.
      *
@@ -64,7 +68,7 @@ class ActiviteController extends Controller
     {
         return Activite::with('user','type_activite','images','commentaires.user')->find($id);
     }
-    
+
     public function findByUserId($user_id)
     {
         return Activite::where('user_id',$user_id)->with('user','type_activite','images','commentaires.user')->first();

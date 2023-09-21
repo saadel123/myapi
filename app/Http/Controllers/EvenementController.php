@@ -77,10 +77,11 @@ class EvenementController extends Controller
         //     'description' => 'required|min:10|max:30000',
         //     'image' => 'required|mimes:jpg,jpeg,png|max:2000',
         // ]);
-         /*
+        /*
         $evenement = Evenement::findOrFail($id);
         $updateEvenement = $request->all();
-        if ($request->hasFile('image')) {
+        if ($request->hasFile('image'))
+        {
             $updateGastronomie["image"] = $request->image->store('images/evenements', 'public');
         }
         $evenement->update($updateEvenement);
@@ -88,14 +89,16 @@ class EvenementController extends Controller
         $evenement = Evenement::findOrFail($id);
         $evenement->titre =  $request->titre;
         $evenement->description =  $request->description;
-              $evenement->seo_titre =  $request->seo_titre;
-         $evenement->seo_keywords =  $request->seo_keywords;
-          $evenement->seo_description =  $request->seo_description;
+        $evenement->titre_ar =  $request->titre_ar;
+        $evenement->description_ar =  $request->description_ar;
+        $evenement->seo_titre =  $request->seo_titre;
+        $evenement->seo_keywords =  $request->seo_keywords;
+        $evenement->seo_description =  $request->seo_description;
         if ($request->hasFile('image')) {
             $evenement->image = $request->image->store('images/evenements', 'public');
         }
         $evenement->save();
-         
+
         $respone = [
             'evenement' => $evenement,
         ];

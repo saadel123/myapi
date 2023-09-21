@@ -87,6 +87,8 @@ class GastronomieController extends Controller
         $gastronomie = Gastronomie::findOrFail($id);
         $gastronomie->titre =  $request->titre;
         $gastronomie->description =  $request->description;
+        $gastronomie->titre_ar =  $request->titre_ar;
+        $gastronomie->description_ar =  $request->description_ar;
         $gastronomie->seo_titre =  $request->seo_titre;
         $gastronomie->seo_keywords =  $request->seo_keywords;
         $gastronomie->seo_description =  $request->seo_description;
@@ -94,7 +96,7 @@ class GastronomieController extends Controller
             $gastronomie->image = $request->image->store('images/gastronomies', 'public');
         }
         $gastronomie->save();
-        
+
         $respone = [
             'gastronomie' => $gastronomie,
         ];

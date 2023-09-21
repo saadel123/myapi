@@ -52,6 +52,10 @@ class ImageController extends Controller
                 $save->id_restaurant = $request->id_restaurant;
                 $path = $mediaFiles->store('images/restaurants', 'public');
             }
+            if (!empty($request->id_apparthotels)) {
+                $save->id_apparthotels = $request->id_apparthotels;
+                $path = $mediaFiles->store('images/appart-hotels', 'public');
+            }
 
             //$save->libelle = $name;
             $save->image = $path;

@@ -38,6 +38,7 @@ class ReservezController extends Controller
         if (!empty($owner_email)) {
             Mail::to($owner_email)->send(new ReservezMail($reservez));
         }
+            // Mail::to('s.elghanemy@directinvest.ma')->send(new ReservezMail($reservez));
         return Reservez::create($reservez);
 
         // $reservez = Reservez::create([
@@ -59,7 +60,7 @@ class ReservezController extends Controller
     {
         //
     }
-    
+
       /**
      * Display the specified resource.
      *
@@ -70,31 +71,37 @@ class ReservezController extends Controller
     {
         return Reservez::where('id_hotel','=',$id)->get();
     }
-    
+
      public function showByRiad($id)
     {
         Reservez::where('id_riad','=',$id)->get();
     }
-    
+
      public function showByMaison($id)
     {
         Reservez::where('id_maison_hote','=',$id)->get();
     }
-    
+
      public function showByrestaurant($id)
     {
         Reservez::where('id_restaurant','=',$id)->get();
     }
-    
+
      public function showByActivite($id)
     {
         Reservez::where('id_activite','=',$id)->get();
     }
-    
+
      public function showByGuide($id)
     {
         Reservez::where('id_guide','=',$id)->get();
     }
+    public function showByApparthotels($id)
+    {
+        Reservez::where('id_apparthotels','=',$id)->get();
+    }
+
+
 
     /**
      * Update the specified resource in storage.

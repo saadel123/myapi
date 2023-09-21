@@ -19,6 +19,7 @@ class Commentaire extends Model
         'id_restaurant',
         'id_activite',
         'id_guide',
+        'id_apparthotels',
     ];
     public function hotel()
     {
@@ -48,5 +49,13 @@ class Commentaire extends Model
     {
         return $this->belongsTo(Activite::class, 'id_activite');
     }
+    public function apparthotel()
+    {
+        return $this->belongsTo(Activite::class, 'id_apparthotels');
+    }
+    // public function appartement()
+    // {
+    //     return $this->belongsTo(Activite::class, 'id_appartement');
+    // }
 }
 

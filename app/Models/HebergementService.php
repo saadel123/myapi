@@ -13,6 +13,8 @@ class HebergementService extends Model
         'id_riad',
         'id_maison_hote',
         'id_service',
+        'id_apparthotels',
+        // 'id_villa',
     ];
     public function hotel()
     {
@@ -29,5 +31,13 @@ class HebergementService extends Model
     public function service()
     {
         return $this->belongsTo(Service::class, 'id_service');
+    }
+    // public function villa()
+    // {
+    //     return $this->belongsTo(Service::class, 'id_villa');
+    // }
+    public function apparthotel()
+    {
+        return $this->belongsTo(Service::class, 'id_apparthotels');
     }
 }

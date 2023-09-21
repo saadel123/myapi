@@ -14,7 +14,9 @@ class Image extends Model
         'libelle',
         'id_hotel',
         'id_riad',
-        'id_maison_hote'
+        'id_maison_hote',
+        'id_apparthotels',
+        // 'id_villa'
     ];
     public function hotel()
     {
@@ -31,5 +33,9 @@ class Image extends Model
     public function restaurant()
     {
         return $this->belongsTo(Restaurant::class, 'id_restaurant');
+    }
+    public function apparthotel()
+    {
+        return $this->belongsTo(Apparthotels::class, 'id_apparthotels');
     }
 }

@@ -43,7 +43,7 @@ class CommentaireController extends Controller
         return Commentaire::whereId($id)->with('user')->first();
 
     }
-    
+
        /**
      * Display the specified resource.
      *
@@ -54,32 +54,36 @@ class CommentaireController extends Controller
     {
        return Commentaire::where('id_hotel','=',$hotel_id)->with('user')->get();
     }
-    
+
     public function getCommentairesByRiad($riad_id)
     {
        return Commentaire::where('id_riad','=',$riad_id)->with('user')->get();
     }
-    
+
     public function getCommentairesByRestaurant($restaurant_id)
     {
        return Commentaire::where('id_restaurant','=',$restaurant_id)->with('user')->get();
     }
-    
+
     public function getCommentairesByMaison($maison_id)
     {
        return Commentaire::where('id_maison_hote','=',$maison_id)->with('user')->get();
     }
-    
+
     public function getCommentairesByActivite($activite_id)
     {
        return Commentaire::where('id_activite','=',$activite_id)->with('user')->get();
     }
-    
+
     public function getCommentairesByGuide($guide_id)
     {
        return Commentaire::where('id_guide','=',$guide_id)->with('user')->get();
     }
 
+    public function getCommentairesByAppartHotel($guide_id)
+    {
+       return Commentaire::where('id_apparthotels','=',$guide_id)->with('user')->get();
+    }
     /**
      * Update the specified resource in storage.
      *

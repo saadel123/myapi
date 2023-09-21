@@ -12,8 +12,10 @@ class GuidesTouristique extends Model
     protected $fillable = [
         'user_id',
         'nom',
+        'nom_ar',
         'slug',
         'description',
+        'description_ar',
         'tel',
         'ville_id',
         'adresse',
@@ -21,6 +23,9 @@ class GuidesTouristique extends Model
         'prix',
         'date_act',
         'website',
+        'display_home',
+        'display',
+        'url' ,
         'facebook',
         'instagram',
         'tiktok',
@@ -54,5 +59,9 @@ class GuidesTouristique extends Model
     public function type_activite()
     {
         return $this->hasMany(TypeActivite::class, 'id_guide');
+    }
+    public function reservezs()
+    {
+        return $this->hasMany(Reservez::class, 'id_guide');
     }
 }

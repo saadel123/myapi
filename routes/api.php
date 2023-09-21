@@ -4,6 +4,7 @@ use App\Http\Controllers\ActiviteController;
 use App\Http\Controllers\ActiviteImagesCotroller;
 use App\Http\Controllers\ActualiteController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CarouselController;
 use App\Http\Controllers\ChambreController;
 use App\Http\Controllers\CommentaireController;
 use App\Http\Controllers\CommentPartageController;
@@ -34,7 +35,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LigneMenuController;
 use App\Http\Controllers\UserFavoriteController;
-
+use App\Http\Controllers\Apparthotels;
+use App\Http\Controllers\ApparthotelsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -54,6 +56,17 @@ use App\Http\Controllers\UserFavoriteController;
 
 //Route::middleware(['checkIp'])->group(function () {
 
+
+/******Appart'hôtels ******* */
+Route::get('/appart-hotels', [ApparthotelsController::class, 'index']);
+Route::get('/appart-hotelsadmin', [ApparthotelsController::class, 'indexAdmin']);
+Route::post('/appart-hotels', [ApparthotelsController::class, 'store']);
+Route::get('/appart-hotels/{slug}', [ApparthotelsController::class, 'show']);
+Route::get('/appart-hotels/id/{id}', [ApparthotelsController::class, 'id']);
+Route::post('/appart-hotels/{id}', [ApparthotelsController::class, 'update']);
+Route::delete('/appart-hotels/{id}', [ApparthotelsController::class, 'destroy']);
+Route::get('/appart-hotels/search/{name}', [ApparthotelsController::class, 'search']);
+/******Appart'hôtels ****** */
 
 /******favorites******* */
 Route::get('/favorites', [UserFavoriteController::class, 'index']);
@@ -115,6 +128,7 @@ Route::delete('/post-images/{id}', [ActiviteImagesCotroller::class, 'destroy']);
 
 /******Guide Touristique******* */
 Route::get('/guides-touristique', [GuidesTouristiqueController::class, 'index']);
+Route::get('/guides-touristiqueadmin', [GuidesTouristiqueController::class, 'indexAdmin']);
 Route::post('/guides-touristique', [GuidesTouristiqueController::class, 'store']);
 Route::get('/guides-touristique/{slug}', [GuidesTouristiqueController::class, 'show']);
 Route::get('/guides-touristique/id/{id}', [GuidesTouristiqueController::class, 'id']);
@@ -125,6 +139,7 @@ Route::get('/guides-touristique/search/{name}', [GuidesTouristiqueController::cl
 
 /******Activites******* */
 Route::get('/activites', [ActiviteController::class, 'index']);
+Route::get('/activitesadmin', [ActiviteController::class, 'indexAdmin']);
 Route::post('/activites', [ActiviteController::class, 'store']);
 Route::get('/activites/{slug}', [ActiviteController::class, 'show']);
 Route::get('/activites/id/{id}', [ActiviteController::class, 'id']);
@@ -201,6 +216,7 @@ Route::get('/actualites/search/{name}', [ActualiteController::class, 'search']);
 
 /******Restaurant******* */
 Route::get('/restaurants', [RestaurantController::class, 'index']);
+Route::get('/restaurantsadmin', [RestaurantController::class, 'indexAdmin']);
 Route::post('/restaurants', [RestaurantController::class, 'store']);
 Route::get('/restaurants/{slug}', [RestaurantController::class, 'show']);
 Route::get('/restaurants/id/{id}', [RestaurantController::class, 'id']);
@@ -218,11 +234,15 @@ Route::get('/maisons/findbyuserid/{userid}', [MaisonHotesController::class, 'fin
 Route::get('/restaurants/findbyuserid/{userid}', [RestaurantController::class, 'findByUserId']);
 Route::get('/activites/findbyuserid/{userid}', [ActiviteController::class, 'findByUserId']);
 Route::get('/guides-touristique/findbyuserid/{userid}', [GuidesTouristiqueController::class, 'findByUserId']);
+Route::get('/appart-hotels/findbyuserid/{userid}', [ApparthotelsController::class, 'findByUserId']);
+
 
 /*** End ****/
 
 
 Route::post('/contact', [ContactController::class, 'store']);
+
+Route::get('/carousel', [CarouselController::class, 'index']);
 
 Route::get('/reservations', [ReservezController::class, 'index']);
 Route::post('/reservations', [ReservezController::class, 'store']);
@@ -235,6 +255,7 @@ Route::get('reservations/restaurant/{id}', [ReservezController::class, 'showByRe
 Route::get('reservations/maison-hote/{id}', [ReservezController::class, 'showByMaison']);
 Route::get('reservations/activite/{id}', [ReservezController::class, 'showByActivite']);
 Route::get('reservations/guide/{id}', [ReservezController::class, 'showByGuide']);
+Route::get('reservations/apparthotels/{id}', [ReservezController::class, 'showByApparthotels']);
 
 
 
@@ -251,6 +272,7 @@ Route::get('/commentaires/restaurant/{id}', [CommentaireController::class, 'getC
 Route::get('/commentaires/maison-hote/{id}', [CommentaireController::class, 'getCommentairesByMaison']);
 Route::get('/commentaires/activite/{id}', [CommentaireController::class, 'getCommentairesByActivite']);
 Route::get('/commentaires/guide/{id}', [CommentaireController::class, 'getCommentairesByGuide']);
+Route::get('/commentaires/apparthotels/{id}', [CommentaireController::class, 'getCommentairesByAppartHotel']);
 
 Route::post('/images', [ImageController::class, 'store']);
 Route::delete('/images/{id}', [ImageController::class, 'destroy']);
@@ -266,6 +288,7 @@ Route::get('/villes', [VilleController::class, 'index']);
 
 
 Route::get('/hotels', [HotelController::class, 'index']);
+Route::get('/hotelsadmin', [HotelController::class, 'indexAdmin']);
 Route::post('/hotels', [HotelController::class, 'store']);
 Route::get('/hotels/{slug}', [HotelController::class, 'show']);
 Route::get('/hotels/id/{id}', [HotelController::class, 'id']);
@@ -277,6 +300,7 @@ Route::get('/hotels/search/{name}', [HotelController::class, 'search']);
 
 
 Route::get('/riads', [RiadController::class, 'index']);
+Route::get('/riadsadmin', [RiadController::class, 'indexAdmin']);
 Route::post('/riads', [RiadController::class, 'store']);
 Route::get('/riads/{slug}', [RiadController::class, 'show']);
 Route::get('/riads/id/{id}', [RiadController::class, 'id']);
@@ -285,6 +309,7 @@ Route::delete('/riads/{id}', [RiadController::class, 'destroy']);
 Route::get('/riads/search/{name}', [RiadController::class, 'search']);
 
 Route::get('/maisons', [MaisonHotesController::class, 'index']);
+Route::get('/maisonsadmin', [MaisonHotesController::class, 'indexAdmin']);
 Route::post('/maisons', [MaisonHotesController::class, 'store']);
 Route::get('/maisons/{slug}', [MaisonHotesController::class, 'show']);
 Route::get('/maisons/id/{id}', [MaisonHotesController::class, 'id']);
@@ -319,7 +344,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/updatepassword/{id}', [UserController::class, 'updatePassword']);
     Route::get('/users', [UserController::class, 'index']);
     Route::get('/users/{id}', [UserController::class, 'show']);
-    
+
 });
 
 

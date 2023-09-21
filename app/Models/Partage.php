@@ -13,12 +13,14 @@ class Partage extends Model
         'user_id',
         'ville_id',
         'description',
+        'description_ar',
         'titre',
+        'titre_ar',
         'slug',
         'image',
         'seo_titre' ,
         'seo_description' ,
-        'seo_keywords' 
+        'seo_keywords'
     ];
     public function commentpartage()
     {

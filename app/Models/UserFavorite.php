@@ -17,6 +17,7 @@ class UserFavorite extends Model
         'id_restaurant',
         'id_activite',
         'id_guide',
+        'id_apparthotels',
     ];
 
     public function user()
@@ -46,5 +47,9 @@ class UserFavorite extends Model
     public function guide()
     {
         return $this->belongsTo(GuidesTouristique::class, 'id_guide');
+    }
+    public function apparthotel()
+    {
+        return $this->belongsTo(Apparthotels::class, 'id_apparthotels');
     }
 }

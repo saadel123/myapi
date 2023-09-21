@@ -13,9 +13,13 @@ class GuidesTouristiqueController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function indexAdmin()
+    {
+        return GuidesTouristique::with('ville', 'images')->orderBy('created_at', 'DESC')->get();
+    }
     public function index()
     {
-        return GuidesTouristique::with('images')->orderBy('created_at', 'DESC')->get();
+        return GuidesTouristique::with('ville', 'images')->where('display',1)->orderBy('created_at', 'DESC')->get();
     }
 
     /**
@@ -53,7 +57,7 @@ class GuidesTouristiqueController extends Controller
     {
         return GuidesTouristique::whereSlug($slug)->with('user','langue_guides.langue','type_activite','images','commentaires.user')->first();
     }
-    
+
       /**
      * Display the specified resource.
      *
@@ -64,7 +68,7 @@ class GuidesTouristiqueController extends Controller
     {
         return GuidesTouristique::with('user','langue_guides.langue','type_activite','images','commentaires.user')->find($id);
     }
-    
+
        public function findByUserId($user_id)
     {
         return GuidesTouristique::where('user_id',$user_id)->with('user','langue_guides.langue','type_activite','images','commentaires.user')->first();

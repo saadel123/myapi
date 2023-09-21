@@ -5,22 +5,21 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Riad extends Model
+class Apparthotels extends Model
 {
     use HasFactory;
-    protected $table='riads';
+    protected $table='apparthotels';
     protected $fillable = [
         'user_id' ,
         'nom' ,
+        'nom_ar' ,
         'slug' ,
         'description' ,
-        'nom_ar',
-        'description_ar',
+        'description_ar' ,
         'tel' ,
         'ville_id' ,
         'adresse' ,
         'email' ,
-        'prix' ,
         'website' ,
         'display_home',
         'display',
@@ -30,6 +29,7 @@ class Riad extends Model
         'tiktok' ,
         'whatsapp' ,
         'nb_visite',
+        'prix_nuit',
         'prix_min',
         'prix_max',
         'accepter_regles'
@@ -42,30 +42,30 @@ class Riad extends Model
         return $this->belongsTo(Ville::class,'ville_id');
     }
     public function images(){
-        return $this->hasMany(Image::class,'id_riad');
-    }
-    public function chambres()
-    {
-        return $this->hasMany(Chambre::class,'id_riad');
+        return $this->hasMany(Image::class,'id_apparthotels');
     }
     public function commentaires()
     {
-        return $this->hasMany(Commentaire::class,'id_riad');
-    }
-    public function type_chambres()
-    {
-        return $this->hasManyThrough(Type_chambre::class, Chambre::class,'id_riad','id_chambre');
+        return $this->hasMany(Commentaire::class,'id_apparthotels');
     }
     public function services()
     {
-        return $this->hasMany(Service::class, 'id_riad');
+        return $this->hasMany(Service::class, 'id_apparthotels');
     }
     public function hebergement_service()
     {
-        return $this->hasMany(HebergementService::class, 'id_riad');
+        return $this->hasMany(HebergementService::class, 'id_apparthotels');
+    }
+    public function chambres()
+    {
+        return $this->hasMany(Chambre::class,'id_apparthotels');
     }
     public function reservezs()
     {
-        return $this->hasMany(Reservez::class, 'id_riad');
+        return $this->hasMany(Reservez::class, 'id_apparthotels');
+    }
+    public function user_favorites()
+    {
+        return $this->hasMany(UserFavorite::class, 'id_apparthotels')->select('id', 'id_apparthotels','user_id');
     }
 }
